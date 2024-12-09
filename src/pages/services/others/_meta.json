@@ -1,4 +1,9 @@
 {
   "DeepLX": "[LD]DeepLX 服务",
-  "HttpRW": "[LD]HttpRW 服务"
+  "HttpRW": "[LD]HttpRW 服务",
+  "friendship-link": "[LD]友链",
+  "legal-advice": "法律咨询",
+  "find-resource": "代找资源",
+  "development-advice": "编程咨询",
+  "offline-download": "离线下载"
 }
