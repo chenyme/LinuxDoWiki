@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/animate-ui/radix/hover-card';
 
 /**
@@ -99,12 +100,6 @@ export const UserGroupTooltip = ({
   // 用户数据状态
   const [usersData, setUsersData] = useState<UserDataState>({});
   
-  // 获取所有用户数据
-  const fetchAllUsersData = useCallback(async () => {
-    const promises = users.map(user => fetchUserData(user.username));
-    await Promise.all(promises);
-  }, [users]);
-  
   // 获取单个用户数据
   const fetchUserData = useCallback(async (username: string) => {
     if (!username) return;
@@ -156,6 +151,12 @@ export const UserGroupTooltip = ({
     }
   }, [usersData]);
   
+  // 获取所有用户数据
+  const fetchAllUsersData = useCallback(async () => {
+    const promises = users.map(user => fetchUserData(user.username));
+    await Promise.all(promises);
+  }, [users, fetchUserData]);
+  
   // 组件挂载时获取所有用户数据
   useEffect(() => {
     fetchAllUsersData();
@@ -204,10 +205,12 @@ export const UserGroupTooltip = ({
                 rel="noopener noreferrer"
               >
                 <div className={`${avatarSizeClass} border-3 border-background cursor-pointer rounded-full relative flex shrink-0 overflow-hidden`}>
-                  <img 
+                  <Image 
                     src={getAvatarUrl(user.username)} 
                     alt={getDisplayName(user.username)} 
                     className="h-full w-full object-cover"
+                    width={48}
+                    height={48}
                   />
                   {/* Fallback if image fails to load */}
                   <div className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br ${getRandomGradient(user.username)} opacity-0 group-[.has-error]:opacity-100`}>
@@ -222,10 +225,12 @@ export const UserGroupTooltip = ({
                 {/* 用户头像 */}
                 <div className="flex items-center gap-4">
                   <div className="size-16 border rounded-full overflow-hidden relative flex shrink-0">
-                    <img 
+                    <Image 
                       src={getAvatarUrl(user.username)} 
                       alt={getDisplayName(user.username)} 
                       className="h-full w-full object-cover"
+                      width={64}
+                      height={64}
                     />
                     {/* Fallback if image fails to load */}
                     <div className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br ${getRandomGradient(user.username)} opacity-0 group-[.has-error]:opacity-100`}>

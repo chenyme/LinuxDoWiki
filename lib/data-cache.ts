@@ -77,14 +77,14 @@ class DataCacheManager {
   /**
    * 检查缓存是否过期
    */
-  private isCacheExpired(entry: CacheEntry<any>, ttl: number): boolean {
+  private isCacheExpired<T>(entry: CacheEntry<T>, ttl: number): boolean {
     return Date.now() - entry.timestamp > ttl;
   }
 
   /**
    * 通知订阅者数据更新
    */
-  private notifySubscribers<T>(subscribers: Map<string, Set<() => void>>, key: string) {
+  private notifySubscribers(subscribers: Map<string, Set<() => void>>, key: string) {
     const subs = subscribers.get(key);
     if (subs) {
       subs.forEach(callback => callback());
@@ -346,8 +346,6 @@ class DataCacheManager {
    * 清除过期缓存
    */
   clearExpiredCache(): void {
-    const now = Date.now();
-    
     // 清除过期的用户缓存
     for (const [key, entry] of this.userCache.entries()) {
       if (this.isCacheExpired(entry, CACHE_CONFIG.USER_CACHE_TTL)) {

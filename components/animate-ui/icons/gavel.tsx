@@ -1,8 +1,16 @@
-'use client';;
-import * as React from 'react';
-import { motion } from 'motion/react';
+'use client';
 
-import { getVariants, useAnimateIconContext, IconWrapper } from '@/components/animate-ui/icons/icon';
+import * as React from 'react';
+import { motion, type Variants } from 'motion/react';
+
+import {
+  getVariants,
+  useAnimateIconContext,
+  IconWrapper,
+  type IconProps,
+} from '@/components/animate-ui/icons/icon';
+
+type GavelProps = IconProps<keyof typeof animations>;
 
 const animations = {
   default: {
@@ -15,17 +23,13 @@ const animations = {
         rotate: [0, 30, -5, 0],
       },
     },
-
     path1: {},
     path2: {},
-    path3: {}
-  }
-};
+    path3: {},
+  } satisfies Record<string, Variants>,
+} as const;
 
-function IconComponent({
-  size,
-  ...props
-}) {
+function IconComponent({ size, ...props }: GavelProps) {
   const { controls } = useAnimateIconContext();
   const variants = getVariants(animations);
 
@@ -43,38 +47,50 @@ function IconComponent({
       variants={variants.group}
       initial="initial"
       animate={controls}
-      {...props}>
+      {...props}
+    >
       <motion.path
         d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"
         variants={variants.path1}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.path
         d="m16 16 6-6"
         variants={variants.path2}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.path
         d="m8 8 6-6"
         variants={variants.path3}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.path
         d="m9 7 8 8"
         variants={variants.path4}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.path
         d="m21 11-8-8"
         variants={variants.path5}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
     </motion.svg>
   );
 }
 
-function Gavel(props) {
+function Gavel(props: GavelProps) {
   return <IconWrapper icon={IconComponent} {...props} />;
 }
 
-export { animations, Gavel, Gavel as GavelIcon };
+export {
+  animations,
+  Gavel,
+  Gavel as GavelIcon,
+  type GavelProps,
+  type GavelProps as GavelIconProps,
+};

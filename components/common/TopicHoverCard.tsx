@@ -10,29 +10,6 @@ import {
 import { useTopicData } from '@/hooks/useDataCache';
 
 /**
- * 话题数据接口定义
- */
-interface TopicData {
-  id: number;
-  title: string;
-  created_at: string;
-  user_id: number;
-  category_id: number;
-  tags: string[];
-  posts_count: number;
-  views: number;
-  like_count: number;
-  last_posted_at: string;
-  word_count: number;
-  participant_count: number;
-  details: {
-    created_by: {
-      username: string;
-    };
-  };
-}
-
-/**
  * TopicHoverCard 组件属性接口
  */
 interface TopicHoverCardProps {
@@ -249,14 +226,14 @@ export const TopicHoverCard = ({ topicId, defaultTitle }: TopicHoverCardProps) =
   };
 
   return (
-    <span className="inline-flex items-center align-middle">
+    <span className="inline-flex items-center justify-center align-middle">
       <HoverCard>
         <HoverCardTrigger asChild>
           <Link
             href={`${DEFAULT_CONFIG.TOPIC_BASE_URL}${topicId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer align-middle no-underline hover:no-underline transition-all duration-200 hover:opacity-80 border-b border-dotted border-current"
+            className="cursor-pointer inline-flex items-center justify-center align-middle no-underline hover:no-underline transition-all duration-200 hover:opacity-80 border-b border-dotted border-current"
             style={{ color: error ? "#fea000" : undefined }}
           >
             <span className="align-middle">{getTopicTitle()}</span>

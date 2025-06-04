@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 interface TopicResponse {
   id: number;
@@ -36,7 +36,7 @@ export async function GET(
     const data: TopicResponse = await response.json();
     
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch topic data' },
       { status: 500 }

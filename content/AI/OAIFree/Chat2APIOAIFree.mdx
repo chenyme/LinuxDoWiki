@@ -1,42 +1,41 @@
 <br></br>
 
-import Link from 'next/link';
-import { Callout } from 'nextra/components';
-import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
+import Link from 'next/link'
+import { Callout } from 'nextra/components'
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 import { TopicHoverCard } from '@/components/common/TopicHoverCard'
 
 # Chat2API OAIFree
 
-<Callout type="error">
-    2024年11月27日，OAIFree 宣布关停，详情见 
-    
-    <TopicHoverCard topicId="272012" defaultTitle="there is no wall" />
+<Callout type='error'>
+    2024年11月27日，OAIFree 宣布关停，详情见
+    <TopicHoverCard topicId='272012' defaultTitle='there is no wall' />
 </Callout>
 
 ## 功能介绍
 
-Chat2API - OAIFree 是始皇对 OpenAI 相关接口进行转换，模拟 API 调用格式，把 access token 传进去就开转，可以实现比如对话、tts、whisper、画图等 API 调用方式。
+Chat2API - OAIFree 是始皇对 OpenAI 相关接口的转换服务，通过模拟 API 调用格式，只需传入 Access Token 即可实现对话、语音转文字、文字转语音、AI 绘图等多种功能。
 
-- 只为ChatGPT Plus提供服务。
-- 目前频控 10/10s，将来一定会跟 LINUX DO Connect 挂钩。
-- 限制了 whisper 上传文件大小为：4M。
-- 支持使用 gizmo，使用 g-xxx 的 id 作为模型名即可。
-- Team 账号只需要传递 ChatGPT-Account-ID 头即可实现切换。
+- 仅支持 ChatGPT Plus 账号
+- 当前频率限制为 10次/10秒，后续将与 LINUX DO Connect 深度整合
+- Whisper 语音转文字的文件大小上限为 4MB
+- 支持调用 GPTs，使用 g-xxx 格式的 ID 作为模型名称
+- 团队账号可通过 ChatGPT-Account-ID 请求头实现账号切换
 
-而这一切，只需要使用 **ChatGPT Plus** 账号的 Access Token 即可调用！
+只需一个 **ChatGPT Plus** 账号的 Access Token，即可享受所有功能！
 
-## 如何调用
+## 调用方式
 
-调用方式和 OpenAI API 调用一模一样，只需要将 Base_url 换为 OAIFree 的 API 地址即可, Api_key 换为 Access Token。
-- Team 账号只需把 `<access token>` 替换成 `<access token>,<team account id>`
+API 调用方式与 OpenAI 官方完全一致，只需将 base_url 修改为 OAIFree 的 API 地址，并使用 Access Token 作为 api_key。
+- 团队账号请将 `<access token>` 替换为 `<access token>,<team account id>` 格式
 
 <br></br>
 
 <CodeTabs
   codes={{
     Curl: `curl https://api.oaifree.com/v1 \\
-      -H "Content-Type: application/json" \\
-      -H "Authorization: Bearer <access token>" \\  # 替换为你的 ACCESS TOKEN
+      -H 'Content-Type: application/json' \\
+      -H 'Authorization: Bearer <access token>' \\  # 替换为你的 ACCESS TOKEN
       -d '{
         "model": "gpt-4o-mini",
         "messages": [
@@ -47,15 +46,15 @@ Chat2API - OAIFree 是始皇对 OpenAI 相关接口进行转换，模拟 API 调
     Python: `from openai import OpenAI
 
 client = OpenAI(
-    api_key="<access token>",  # 替换为你的 ACCESS TOKEN
-    base_url="https://api.oaifree.com/v1"
+    api_key='<access token>',  # 替换为你的 ACCESS TOKEN
+    base_url='https://api.oaifree.com/v1'
 )
 
 response = client.chat.completions.create(
-  model="gpt-4o-mini",
+  model='gpt-4o-mini',
   messages=[
-    {"role": "system", "content": "You are a helpful assistant."},
-    {"role": "user", "content": "What is a LLM?"}
+    {'role': 'system', 'content': 'You are a helpful assistant.'},
+    {'role': 'user', 'content': 'What is a LLM?'}
   ]
 )`,
     Javascript: `const response = await fetch('https://api.oaifree.com/v1', {

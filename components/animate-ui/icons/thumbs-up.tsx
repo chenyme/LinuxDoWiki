@@ -1,8 +1,16 @@
-'use client';;
-import * as React from 'react';
-import { motion } from 'motion/react';
+'use client';
 
-import { getVariants, useAnimateIconContext, IconWrapper } from '@/components/animate-ui/icons/icon';
+import * as React from 'react';
+import { motion, type Variants } from 'motion/react';
+
+import {
+  getVariants,
+  useAnimateIconContext,
+  IconWrapper,
+  type IconProps,
+} from '@/components/animate-ui/icons/icon';
+
+type ThumbsUpProps = IconProps<keyof typeof animations>;
 
 const animations = {
   default: {
@@ -19,11 +27,9 @@ const animations = {
         },
       },
     },
-
     path1: {},
-    path2: {}
-  },
-
+    path2: {},
+  } satisfies Record<string, Variants>,
   'default-loop': {
     group: {
       initial: {
@@ -38,16 +44,12 @@ const animations = {
         },
       },
     },
-
     path1: {},
-    path2: {}
-  }
-};
+    path2: {},
+  } satisfies Record<string, Variants>,
+} as const;
 
-function IconComponent({
-  size,
-  ...props
-}) {
+function IconComponent({ size, ...props }: ThumbsUpProps) {
   const { controls } = useAnimateIconContext();
   const variants = getVariants(animations);
 
@@ -65,23 +67,32 @@ function IconComponent({
       variants={variants.group}
       initial="initial"
       animate={controls}
-      {...props}>
+      {...props}
+    >
       <motion.path
         d="M7 10v12"
         variants={variants.path1}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.path
         d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"
         variants={variants.path2}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
     </motion.svg>
   );
 }
 
-function ThumbsUp(props) {
+function ThumbsUp(props: ThumbsUpProps) {
   return <IconWrapper icon={IconComponent} {...props} />;
 }
 
-export { animations, ThumbsUp, ThumbsUp as ThumbsUpIcon };
+export {
+  animations,
+  ThumbsUp,
+  ThumbsUp as ThumbsUpIcon,
+  type ThumbsUpProps,
+  type ThumbsUpProps as ThumbsUpIconProps,
+};

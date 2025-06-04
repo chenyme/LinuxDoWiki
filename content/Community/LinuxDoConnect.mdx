@@ -1,59 +1,59 @@
 <br></br>
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
+import Image from 'next/image'
+import Link from 'next/link'
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
  
 # Linux DO Connect
 
-OAuth（Open Authorization），目前最新版本是OAuth 2.0，是一个开放网络标准，旨在实现授权。日常使用的第三方登录方式，如 Google 账号登录，就采用了该标准。OAuth 允许用户授权第三方应用访问存储在其他服务提供商（如 Google）上的信息，而无需在不同平台上重复填写注册表单。用户授权后，平台可以直接访问用户的 Google 账户信息进行身份验证，而用户无需向第三方应用提供密码。
+OAuth（Open Authorization）是一个开放的网络授权标准，目前最新版本为 OAuth 2.0。我们日常使用的第三方登录（如 Google 账号登录）就采用了该标准。OAuth 允许用户授权第三方应用访问存储在其他服务提供商（如 Google）上的信息，无需在不同平台上重复填写注册信息。用户授权后，平台可以直接访问用户的账户信息进行身份验证，而用户无需向第三方应用提供密码。
 
-目前系统虽然实现了完整的oauth2 code方式鉴权，不过界面等各种配套还比较简陋，将来会不断完善。来一起打造一个和谐的共享方案吧。
+目前系统已实现完整的 OAuth2 授权码（code）方式鉴权，但界面等配套功能还在持续完善中。让我们一起打造一个更完善的共享方案。
 
 ## 基本介绍
 
-这是一套标准的 OAuth2 鉴权，让大家可以共享论坛的用户基本信息。
+这是一套标准的 OAuth2 鉴权系统，可以让开发者共享论坛的用户基本信息。
 
 - 可获取字段：
 
 |参数|说明|
 |------|------|
-| `id` | 一个不会改变的值 |
+| `id` | 用户唯一标识（不可变） |
 | `username` | 论坛用户名 |
-| `name` | 论坛的用户昵称，它可能会改变 |
-| `avatar_template` | 用户头像的模板URL，可用于生成不同尺寸的头像 |
-| `active` | 用户账号是否处于活跃状态 |
-| `trust_level` | 0-4 的数值，分别对应着0级到4级 |
-| `silenced` | 用户是否被禁言 |
-| `external_ids` | 用户的外部ID关联信息 |
-| `api_key` | 用户的API访问密钥 |
+| `name` | 论坛用户昵称（可变） |
+| `avatar_template` | 用户头像模板URL（支持多种尺寸） |
+| `active` | 账号活跃状态 |
+| `trust_level` | 信任等级（0-4） |
+| `silenced` | 禁言状态 |
+| `external_ids` | 外部ID关联信息 |
+| `api_key` | API访问密钥 |
 
 
-如果一个公益的网站/接口能够拿到这些数值，那么就可以：
+通过这些信息，公益网站/接口可以实现：
 
-1. 通过 `id` 进行服务频率限制。
-2. 通过 `trust_level` 进行服务额度配给。
-3. 通过 用户信息 举报滥用。
+1. 基于 `id` 的服务频率限制
+2. 基于 `trust_level` 的服务额度分配
+3. 基于用户信息的滥用举报机制
 
 
 ## 申请使用
 
-- 前往<Link href="https://connect.linux.do/" target="_blank" className="text-blue-500">Connect.Linux.Do</Link>，申请你的应用接入。
+- 访问 <Link href='https://connect.linux.do/' target='_blank' className='text-blue-500'>Connect.Linux.Do</Link> 申请接入你的应用。
 
 <br></br>
-<Image src="/linuxdoconnect_1.png" width={500} height={200} alt="linuxdoconnect_1" />
+<Image src='/linuxdoconnect_1.png' width={500} height={200} alt='linuxdoconnect_1' />
 <br></br>
 
-- 点击 **`我的应用接入`** - **`申请新接入`**，填写相关信息。其中 **`回调地址`** 为你的应用接收用户信息的地址。
+- 点击 **`我的应用接入`** - **`申请新接入`**，填写相关信息。其中 **`回调地址`** 是你的应用接收用户信息的地址。
 
 <br></br>
-<Image src="/linuxdoconnect_2.png" width={500} height={200} alt="linuxdoconnect_2"/>
+<Image src='/linuxdoconnect_2.png' width={500} height={200} alt='linuxdoconnect_2'/>
 <br></br>
 
-- 成功后，你会得到 **`Client Id`** 和 **`Client Secret`**，这两个值是你的应用的唯一标识。
+- 申请成功后，你将获得 **`Client Id`** 和 **`Client Secret`**，这是你应用的唯一身份凭证。
 
 <br></br>
-<Image src="/linuxdoconnect_3.png" width={500} height={200} alt="linuxdoconnect_3"/>
+<Image src='/linuxdoconnect_3.png' width={500} height={200} alt='linuxdoconnect_3'/>
 <br></br>
 
 ## 接入 Linux Do
@@ -69,12 +69,12 @@ OAuth（Open Authorization），目前最新版本是OAuth 2.0，是一个开放
 const axios = require('axios');
 
 // 配置信息
-const CLIENT_ID = "你的Client ID";
-const CLIENT_SECRET = "你的Client Secret";
-const REDIRECT_URI = "你的回调地址";
-const AUTH_URL = "https://connect.linux.do/oauth2/authorize";
-const TOKEN_URL = "https://connect.linux.do/oauth2/token";
-const USER_INFO_URL = "https://connect.linux.do/oauth2/userinfo";
+const CLIENT_ID = '你的Client ID';
+const CLIENT_SECRET = '你的Client Secret';
+const REDIRECT_URI = '你的回调地址';
+const AUTH_URL = 'https://connect.linux.do/oauth2/authorize';
+const TOKEN_URL = 'https://connect.linux.do/oauth2/token';
+const USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo';
 
 // 第一步：生成授权链接
 function getAuthUrl() {
@@ -85,7 +85,7 @@ function getAuthUrl() {
     scope: 'user'
   });
   
-  return AUTH_URL + "?" + params.toString();
+  return AUTH_URL + '?' + params.toString();
 }
 
 // 第二步：使用授权码获取访问令牌
@@ -111,7 +111,7 @@ async function getUserInfo(accessToken) {
   try {
     const response = await axios.get(USER_INFO_URL, {
       headers: {
-        Authorization: "Bearer " + accessToken
+        Authorization: 'Bearer ' + accessToken
       }
     });
     
@@ -126,10 +126,10 @@ async function getUserInfo(accessToken) {
 async function main() {
   // 1. 首先生成授权URL并让用户访问
   const authUrl = getAuthUrl();
-  console.log("请访问此URL授权: " + authUrl);
+  console.log('请访问此URL授权: ' + authUrl);
   
   // 2. 用户授权后，从回调URL获取code参数
-  const code = "用户授权后回调URL中的code参数";
+  const code = '用户授权后回调URL中的code参数';
   
   try {
     // 3. 使用code获取访问令牌
@@ -157,32 +157,32 @@ import requests
 import json
 
 # 配置信息
-CLIENT_ID = "你的Client ID"
-CLIENT_SECRET = "你的Client Secret"
-REDIRECT_URI = "你的回调地址"
-AUTH_URL = "https://connect.linux.do/oauth2/authorize"
-TOKEN_URL = "https://connect.linux.do/oauth2/token"
-USER_INFO_URL = "https://connect.linux.do/oauth2/userinfo"
+CLIENT_ID = '你的Client ID'
+CLIENT_SECRET = '你的Client Secret'
+REDIRECT_URI = '你的回调地址'
+AUTH_URL = 'https://connect.linux.do/oauth2/authorize'
+TOKEN_URL = 'https://connect.linux.do/oauth2/token'
+USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo'
 
 # 第一步：生成授权链接
 def get_auth_url():
     params = {
-        "client_id": CLIENT_ID,
-        "redirect_uri": REDIRECT_URI,
-        "response_type": "code",
-        "scope": "user"
+        'client_id': CLIENT_ID,
+        'redirect_uri': REDIRECT_URI,
+        'response_type': 'code',
+        'scope': 'user'
     }
-    auth_url = f"{AUTH_URL}?{'&'.join(f'{k}={v}' for k, v in params.items())}"
+    auth_url = f'{AUTH_URL}?{'&'.join(f'{k}={v}' for k, v in params.items())}'
     return auth_url
 
 # 第二步：使用授权码获取访问令牌
 def get_access_token(code):
     data = {
-        "client_id": CLIENT_ID,
-        "client_secret": CLIENT_SECRET,
-        "code": code,
-        "redirect_uri": REDIRECT_URI,
-        "grant_type": "authorization_code"
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET,
+        'code': code,
+        'redirect_uri': REDIRECT_URI,
+        'grant_type': 'authorization_code'
     }
     response = requests.post(TOKEN_URL, data=data)
     return response.json()
@@ -190,7 +190,7 @@ def get_access_token(code):
 # 第三步：使用访问令牌获取用户信息
 def get_user_info(access_token):
     headers = {
-        "Authorization": f"Bearer {access_token}"
+        'Authorization': f'Bearer {access_token}'
     }
     response = requests.get(USER_INFO_URL, headers=headers)
     return response.json()
@@ -198,31 +198,31 @@ def get_user_info(access_token):
 # 使用示例
 # 1. 首先生成授权URL并让用户访问
 auth_url = get_auth_url()
-print(f"请访问此URL授权: {auth_url}")
+print(f'请访问此URL授权: {auth_url}')
 
 # 2. 用户授权后，从回调URL获取code参数
-code = "用户授权后回调URL中的code参数"
+code = '用户授权后回调URL中的code参数'
 
 # 3. 使用code获取访问令牌
 token_data = get_access_token(code)
-access_token = token_data.get("access_token")
+access_token = token_data.get('access_token')
 
 # 4. 使用访问令牌获取用户信息
 if access_token:
     user_info = get_user_info(access_token)
     print(json.dumps(user_info, indent=2))
 else:
-    print("获取访问令牌失败:", token_data)`,
+    print('获取访问令牌失败:', token_data)`,
 
     PHP: `// 使用 OAuth2 获取 Linux Do 用户信息
 
 // 配置信息
-$CLIENT_ID = "你的Client ID";
-$CLIENT_SECRET = "你的Client Secret";
-$REDIRECT_URI = "你的回调地址";
-$AUTH_URL = "https://connect.linux.do/oauth2/authorize";
-$TOKEN_URL = "https://connect.linux.do/oauth2/token";
-$USER_INFO_URL = "https://connect.linux.do/oauth2/userinfo";
+$CLIENT_ID = '你的Client ID';
+$CLIENT_SECRET = '你的Client Secret';
+$REDIRECT_URI = '你的回调地址';
+$AUTH_URL = 'https://connect.linux.do/oauth2/authorize';
+$TOKEN_URL = 'https://connect.linux.do/oauth2/token';
+$USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo';
 
 // 生成授权链接
 function getAuthUrl($clientId, $redirectUri) {
@@ -287,9 +287,9 @@ if (isset($_GET['code'])) {
     );
     
     if (isset($userInfo['error'])) {
-        echo "错误: " . $userInfo['error'];
+        echo '错误: ' . $userInfo['error'];
     } else {
-        echo "欢迎, " . $userInfo['name'] . "!";
+        echo '欢迎, ' . $userInfo['name'] . '!';
         // 处理用户登录逻辑...
     }
 }`
@@ -300,15 +300,15 @@ if (isset($_GET['code'])) {
 
 ### 授权流程
 
-- 用户点击你的应用中的"使用 Linux Do 登录"按钮
-- 用户被重定向到 Linux Do 的授权页面
-- 用户授权后，Linux Do 将用户重定向回你的应用，并附带授权码
-- 你的应用使用授权码获取访问令牌
-- 使用访问令牌获取用户信息
+1. 用户点击应用中的'使用 Linux Do 登录'按钮
+2. 系统将用户重定向至 Linux Do 的授权页面
+3. 用户完成授权后，系统自动重定向回应用并携带授权码
+4. 应用使用授权码获取访问令牌
+5. 使用访问令牌获取用户信息
 
-### 安全注意事项
+### 安全建议
 
-- 永远不要在前端暴露你的 Client Secret
-- 验证所有从用户那里获取的数据
-- 使用 HTTPS 确保数据传输安全
-- 定期更新你的 Client Secret
+- 切勿在前端代码中暴露 Client Secret
+- 对所有用户输入数据进行严格验证
+- 确保使用 HTTPS 协议传输数据
+- 定期更新并妥善保管 Client Secret

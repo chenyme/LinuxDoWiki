@@ -25,7 +25,7 @@ export async function GET(
     const data: UserResponse = await response.json();
     
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch user data' },
       { status: 500 }

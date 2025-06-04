@@ -1,19 +1,18 @@
 <br></br>
 
-import Link from 'next/link';
+import Link from 'next/link'
 
 # HTTP 测试接口
 
 <br></br>
 
-<Link href="https://http.rw/" target="_blank" className="text-blue-500">http.rw</Link>
+<Link href='https://http.rw/' target='_blank' className='text-blue-500'>http.rw</Link>
 
-这是一个使用 httpbin 的开源程序实现的 HTTP 测试接口。由于目前这个程序比较老，加上套了一层 CF 效果可能会不太理想，回头会逐步替换为 PHP 的。
+这是一个基于 httpbin 开源项目实现的 HTTP 测试接口服务。由于程序版本较旧且使用了 Cloudflare CDN，性能表现可能不够理想，后续计划迁移至 PHP 重构实现。
 
-你打开此网页就是个接口列表和测试工具，可以玩玩。当然，在命令行使用也毫无问题，如：
+访问该网站可以看到完整的接口列表和在线测试工具。同时也支持命令行调用，例如:
 
 ```shell copy "
 curl http.rw/ip
 ```
 
-这样就可以获取本机IP，大概就是这样。

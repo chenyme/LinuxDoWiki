@@ -102,6 +102,9 @@ export function useTopicData(topicId: string) {
 export function useMultipleUsers(usernames: string[]) {
   const [users, setUsers] = useState<Record<string, { data: UserData | null; loading: boolean; error: boolean }>>({});
   const callbacksRef = useRef<Record<string, () => void>>({});
+  
+  // 为依赖数组创建一个稳定的字符串键
+  const usernamesKey = usernames.join(',');
 
   // 更新单个用户状态
   const updateUserState = useCallback((username: string) => {
@@ -151,7 +154,7 @@ export function useMultipleUsers(usernames: string[]) {
         dataCache.unsubscribeUser(username, callback);
       });
     };
-  }, [usernames.join(','), updateUserState]);
+  }, [usernamesKey, updateUserState, usernames]);
 
   return users;
 }
@@ -162,6 +165,9 @@ export function useMultipleUsers(usernames: string[]) {
 export function useMultipleTopics(topicIds: string[]) {
   const [topics, setTopics] = useState<Record<string, { data: TopicData | null; loading: boolean; error: boolean }>>({});
   const callbacksRef = useRef<Record<string, () => void>>({});
+  
+  // 为依赖数组创建一个稳定的字符串键
+  const topicIdsKey = topicIds.join(',');
 
   // 更新单个话题状态
   const updateTopicState = useCallback((topicId: string) => {
@@ -211,7 +217,7 @@ export function useMultipleTopics(topicIds: string[]) {
         dataCache.unsubscribeTopic(topicId, callback);
       });
     };
-  }, [topicIds.join(','), updateTopicState]);
+  }, [topicIdsKey, updateTopicState, topicIds]);
 
   return topics;
 }

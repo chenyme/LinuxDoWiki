@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   HoverCard,
   HoverCardTrigger,
@@ -43,7 +44,7 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
     if (error || !userData?.avatar_template) {
       return DEFAULT_CONFIG.AVATAR_URL;
     }
-    return userData.avatar_template.replace('/{size}', '');
+    return userData.avatar_template.replace('/{size}', `/${size}`);
   };
 
   /**
@@ -61,32 +62,36 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
   };
 
   return (
-    <span className="inline-flex items-center align-middle">
+    <span className="inline-flex items-center justify-center align-middle">
       <HoverCard>
         <HoverCardTrigger asChild>
           <Link
             href={`${DEFAULT_CONFIG.PROFILE_BASE_URL}${username}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 cursor-pointer align-middle no-underline hover:no-underline transition-opacity hover:opacity-80"
+            className="inline-flex items-center justify-center gap-1 cursor-pointer align-middle no-underline hover:no-underline transition-opacity hover:opacity-80"
           >
-            <img
+            <Image
               src={getAvatarUrl('96')}
               alt={`${getDisplayName()}的头像`}
-              className="size-4 rounded-full border align-middle"
+              className="size-5 rounded-full align-middle"
+              width={24}
+              height={24}
               loading="lazy"
             />
-            <span className="align-middle">@{username}</span>
+            <span className="align-middle items-center justify-center">@{username}</span>
           </Link>
         </HoverCardTrigger>
         
         <HoverCardContent className="w-80">
           <div className="flex flex-col gap-4">
             {/* 用户头像 */}
-            <img
+            <Image
               className="size-16 rounded-full border"
               src={getAvatarUrl('288')}
               alt={`${getDisplayName()}的头像`}
+              width={64}
+              height={64}
               loading="lazy"
             />
             

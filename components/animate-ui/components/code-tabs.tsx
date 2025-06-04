@@ -1,20 +1,37 @@
-'use client';;
+'use client';
+
 import * as React from 'react';
 import { useTheme } from 'next-themes';
 
 import { cn } from '@/lib/utils';
-import { Tabs, TabsContent, TabsList, TabsTrigger, TabsContents } from '@/components/animate-ui/components/tabs';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  TabsContents,
+  type TabsProps,
+} from '@/components/animate-ui/components/tabs';
 import { CopyButton } from '@/components/animate-ui/buttons/copy';
+
+type CodeTabsProps = {
+  codes: Record<string, string>;
+  lang?: string;
+  themes?: {
+    light: string;
+    dark: string;
+  };
+  copyButton?: boolean;
+  onCopy?: (content: string) => void;
+} & Omit<TabsProps, 'children'>;
 
 function CodeTabs({
   codes,
   lang = 'bash',
-
   themes = {
     light: 'github-light',
     dark: 'github-dark',
   },
-
   className,
   defaultValue,
   value,
@@ -22,17 +39,22 @@ function CodeTabs({
   copyButton = true,
   onCopy,
   ...props
-}) {
+}: CodeTabsProps) {
   const { resolvedTheme } = useTheme();
 
-  const [highlightedCodes, setHighlightedCodes] = React.useState(null);
-  const [selectedCode, setSelectedCode] = React.useState(value ?? defaultValue ?? Object.keys(codes)[0] ?? '');
+  const [highlightedCodes, setHighlightedCodes] = React.useState<Record<
+    string,
+    string
+  > | null>(null);
+  const [selectedCode, setSelectedCode] = React.useState<string>(
+    value ?? defaultValue ?? Object.keys(codes)[0] ?? '',
+  );
 
   React.useEffect(() => {
     async function loadHighlightedCode() {
       try {
         const { codeToHtml } = await import('shiki');
-        const newHighlightedCodes = {};
+        const newHighlightedCodes: Record<string, string> = {};
 
         for (const [command, val] of Object.entries(codes)) {
           const highlighted = await codeToHtml(val, {
@@ -59,24 +81,30 @@ function CodeTabs({
   return (
     <Tabs
       data-slot="install-tabs"
-      className={cn('w-full gap-0 bg-muted/50 rounded-xl border overflow-hidden', className)}
+      className={cn(
+        'w-full gap-0 bg-muted/50 rounded-xl border overflow-hidden',
+        className,
+      )}
       {...props}
       value={selectedCode}
       onValueChange={(val) => {
         setSelectedCode(val);
         onValueChange?.(val);
-      }}>
+      }}
+    >
       <TabsList
         data-slot="install-tabs-list"
         className="w-full relative justify-between rounded-none h-10 bg-muted border-b border-border/75 dark:border-border/50 text-current py-0 px-4"
-        activeClassName="rounded-none shadow-none bg-transparent after:content-[''] after:absolute after:inset-x-0 after:h-0.5 after:bottom-0 dark:after:bg-white after:bg-black after:rounded-t-full">
+        activeClassName="rounded-none shadow-none bg-transparent after:content-[''] after:absolute after:inset-x-0 after:h-0.5 after:bottom-0 dark:after:bg-white after:bg-black after:rounded-t-full"
+      >
         <div className="flex gap-x-3 h-full">
           {highlightedCodes &&
             Object.keys(highlightedCodes).map((code) => (
               <TabsTrigger
                 key={code}
                 value={code}
-                className="text-muted-foreground data-[state=active]:text-current px-0">
+                className="text-muted-foreground data-[state=active]:text-current px-0"
+              >
                 {code}
               </TabsTrigger>
             ))}
@@ -88,7 +116,8 @@ function CodeTabs({
             size="sm"
             variant="ghost"
             className="-me-2 bg-transparent hover:bg-black/5 dark:hover:bg-white/10"
-            onCopy={onCopy} />
+            onCopy={onCopy}
+          />
         )}
       </TabsList>
       <TabsContents data-slot="install-tabs-contents">
@@ -98,10 +127,12 @@ function CodeTabs({
               data-slot="install-tabs-content"
               key={code}
               className="w-full text-sm flex items-center p-4 overflow-auto"
-              value={code}>
+              value={code}
+            >
               <div
                 className="[&>pre,_&_code]:!bg-transparent [&>pre,_&_code]:[background:transparent_!important] [&>pre,_&_code]:border-none [&_code]:!text-[13px]"
-                dangerouslySetInnerHTML={{ __html: val }} />
+                dangerouslySetInnerHTML={{ __html: val }}
+              />
             </TabsContent>
           ))}
       </TabsContents>
@@ -109,4 +140,4 @@ function CodeTabs({
   );
 }
 
-export { CodeTabs };
+export { CodeTabs, type CodeTabsProps };
