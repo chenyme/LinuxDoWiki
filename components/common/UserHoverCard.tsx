@@ -124,7 +124,7 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
                   <div className="font-bold">
                     {loading ? '-' : (userData?.gamification_score ?? 0)}
                   </div>
-                  <div className="text-muted-foreground">游戏分数</div>
+                  <div className="text-muted-foreground">社区点数</div>
                 </div>
               </div>
             </div>

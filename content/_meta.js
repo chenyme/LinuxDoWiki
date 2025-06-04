@@ -16,5 +16,10 @@ export default {
         type: 'separator',
         title: '其他信息',
     },
-    Encyclopedia: '社区百科'
+    Encyclopedia: '社区百科',
+    'Link': {
+        type: 'page',
+        title: '访问社区',
+        href: 'https://linux.do',
+    },
 }

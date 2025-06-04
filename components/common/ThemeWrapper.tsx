@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 import {useTheme} from "nextra-theme-docs";
 
-export const ThemeWrapper = ({ childrenInLightTheme, childrenInDarkTheme }) => {
+export const ThemeWrapper = ({ childrenInLightTheme, childrenInDarkTheme }: { childrenInLightTheme: React.ReactNode, childrenInDarkTheme: React.ReactNode }) => {
     const { theme } = useTheme();
     const [currentTheme, setCurrentTheme] = useState(theme);
 
