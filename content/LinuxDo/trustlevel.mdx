@@ -3,6 +3,7 @@
 import { Callout } from 'nextra/components';
 import { Steps } from 'nextra/components';
 import Link from 'next/link';
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
 
 # 信任等级
 
@@ -75,7 +76,7 @@ import Link from 'next/link';
 * 不得收到超过5个垃圾邮件或冒犯性标记（每个都需不同的帖子和不同的用户，并由版主确认）
 * 过去6个月内不能被暂停或禁言
 
-\* 这些点赞必须来自不同的用户数量最少为用户数的1/5，不同的天数最少为天数的1/4。这些点赞不可以来自私信。
+**这些点赞必须来自不同的用户数量最少为用户数的1/5，不同的天数最少为天数的1/4。这些点赞不可以来自私信。**
 
 上述所有标准都必须满足才能达到信任等级3。此外，与其他信任等级不同，*你可能随时失去信任等级3的状态*。如果在过去100天内你的表现低于这些要求，你将会降级回成员。然而，为了避免频繁的升降级情况，获得信任等级3后，有一个2周的宽限期，在此期间你不会被降级。
 
@@ -85,6 +86,8 @@ import Link from 'next/link';
 * 您无法被提升到信任等级4。
 
 </Steps>
+
+- <TopicHoverCard topicId="2460" defaultTitle="【新人请看】了解Discourse信任度" />
 
 ## 一图了解 Linux Do 等级要求
 
@@ -111,15 +114,10 @@ import Link from 'next/link';
 
 ## 查询升级状态
 
-### 官方途径查询
+- 通过 <Link href="https://linux.do/my/badges" target="_blank" className="text-blue-500">查看自己的勋章</Link> 不同的勋章对应不同的信任等级。
 
-<Callout type="info" emoji="">
+- 通过 <Link href="https://connect.linux.do/" target="_blank" className="text-blue-500">Linux Do Connect</Link> 查看自己的信任等级。
 
-- 通过 <Link href="https://linux.do/my/badges" target="_blank" style={{ textDecoration: 'none', color: '#3A9FE8' }}>查看自己的勋章</Link> 不同的勋章对应不同的信任等级。
-
-- 通过 <Link href="https://connect.linux.do/" target="_blank" style={{ textDecoration: 'none', color: '#3A9FE8' }}>Linux Do Connect</Link> 查看自己的信任等级。
-
-</Callout>
 
 ### 积分获取渠道和明细
 

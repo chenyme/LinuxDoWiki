@@ -3,6 +3,8 @@
 import { Callout } from 'nextra/components'
 import Link from 'next/link'
 import Image from 'next/image'
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+import { UserHoverCard } from '@/components/common/UserHoverCard'
 
 # 社区文化
 
@@ -25,7 +27,7 @@ import Image from 'next/image'
 - 主题歌曲：《明天会更好》
 - 社区愿景：新的理想型社区
 - 社区口号：Where possible begins
-- 社区战袍：<Link href='https://linux.do/t/topic/585559' target='_blank' className='text-blue-500' >LINUX DO元气T：社交新名片</Link>
+- 社区战袍：<TopicHoverCard topicId="585559" defaultTitle="🔥LINUX DO元气T：社交新名片"/>
 - 社区文化：真诚、友善、团结、专业，共建你我引以为荣之社区。
 
 ## 社区站长
@@ -34,8 +36,11 @@ import Image from 'next/image'
 
 <Image src="/neo.jpg" width={80} height={80} alt="Neo"/>
 
-Neo 你是相信1+1=2，还是相信我是秦始皇？
+**<UserHoverCard username="neo" />**
 
+ 朝闻道，夕可眠矣。
+
+- <TopicHoverCard topicId="52932" defaultTitle="【人物专栏】国士无双-Pandora天书" />
 
 ## 社区 LOGO
 

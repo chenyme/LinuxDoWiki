@@ -82,7 +82,7 @@ export default async function RootLayout({ children }) {
             content: '有问题？给我提个 issue 吧！',
           }}
           sidebar={{
-            defaultMenuCollapseLevel: 1,
+            defaultMenuCollapseLevel: 2,
           }}
           lastUpdated={<LastUpdated locale="zh-CN">最近更新时间：</LastUpdated>}
           themeSwitch={{
