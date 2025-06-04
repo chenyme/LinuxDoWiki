@@ -21,12 +21,10 @@ interface TopicResponse {
 }
 
 export async function GET(
-  request: NextRequest,
-  context: { params: { topicId: string } }
+  request: Request,
+  { params }: { params: Promise<{ topicId: string }> }
 ): Promise<NextResponse> {
-  // 使用 await 获取 params
-  const params = await Promise.resolve(context.params);
-  const { topicId } = params;
+  const { topicId } = await params;
   
   try {
     const response = await fetch(`https://linux.do/t/${topicId}.json`);

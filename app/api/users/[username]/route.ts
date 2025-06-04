@@ -16,11 +16,9 @@ interface UserResponse {
 
 export async function GET(
   request: NextRequest,
-  context: { params: { username: string } }
+  { params }: { params: Promise<{ username: string }> }
 ): Promise<NextResponse> {
-  // 使用 await 获取 params
-  const params = await Promise.resolve(context.params);
-  const { username } = params;
+  const { username } = await params;
   
   try {
     const response = await fetch(`https://linux.do/api/users/${username}.json`);
