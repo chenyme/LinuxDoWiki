@@ -1,8 +1,10 @@
 <br></br>
 
+import Link from 'next/link';
+import { Steps } from 'nextra/components'
 import { Cards } from 'nextra/components'
-import { Send } from "@/components/animate-ui/icons/send";
 import { Callout } from 'nextra/components'
+import { Gavel } from '@/components/animate-ui/icons/gavel'
 import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
 
 # Linux Do Lottery
@@ -12,24 +14,28 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
 <br></br>
 
 <Cards.Card
-  icon={<Send animateOnHover />}
-  title="lottery.linux.do"
-  href="https://lottery.linux.do"
+   icon={<Gavel animate/>}
+   title="lottery.linux.do"
+   href="https://lottery.linux.do"
+   target="_blank"
   arrow
 />
 
 ## 使用方法
 
+<Steps>
 ### 创建话题
 
 1. 填写一个吸引人的话题标题
-2. 确保话题板块正确分类：
+2. 确保话题板块正确分类
    - 福利羊毛
    - 福利羊毛 > 福利羊毛, Lv1
    - 福利羊毛 > 福利羊毛, Lv2
    - 福利羊毛 > 福利羊毛, Lv3
-3. 使用标签：抽奖类话题须添加 `抽奖` 标签
-4. 使用示例抽奖模板（见本文末）或自行编辑抽奖话题所需文案，需包含：
+3. 使用标签
+抽奖类话题须添加 `抽奖` 标签
+4. 编写抽奖内容
+使用示例 <Link href="#抽奖模版" className="text-blue-500">抽奖模板</Link> 或自行编辑抽奖话题所需文案，需包含：
    - 被抽奖物品、数量
    - 抽奖人数
    - 抽奖起止时间
@@ -65,8 +71,12 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
 3. 点击开始抽奖
 4. 结果生成后，点击发布按钮
 5. 系统会自动通过 @lottery_bot 在抽奖话题末尾发布结果
+</Steps>
 
 ## 注意事项
+
+<Callout type="warning">
+**抽奖时请遵守并注意以下规则**
 
 1. 抽奖类话题仅允许发布在以下板块，其余板块该抽奖程序无法生效：
    - 福利羊毛
@@ -76,9 +86,13 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
 
 2. 抽奖类话题持续期间需确保慢速模式全程启用
 
-3. 抽奖类话题结束后需要关闭话题，避免其他人继续参与（话题不关闭将无法发布抽奖结果）
+3. 抽奖类话题结束后需要关闭话题，避免其他人继续参与
 
-4. 以上内容如与《常见问题解答》发生冲突，以《常见问题解答》为准
+4. 话题不关闭将无法发布抽奖结果
+
+5. 以上内容如与《常见问题解答》发生冲突，以《常见问题解答》为准
+
+</Callout>
 
 ## 抽奖模板
 
@@ -100,7 +114,7 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
 
 **📝 参与方式：**
 
-在本帖下回复“XXXXXXX”。
+在本帖下回复"XXXXXXX"。
 
 **🔍 抽奖规则：**
 

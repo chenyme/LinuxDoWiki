@@ -1,0 +1,155 @@
+<br></br>
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { Callout } from 'nextra/components';
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
+
+# 新版镜像 Fuclaude
+
+由于原定的域名被抢注，因此改名为 Fuclaude（<Link href="https://demo.fuclaude.com/" target="_blank" className="text-blue-500">demo.fuclaude.com</Link>） 始皇称之为 法克劳德。联想上一节所提的 OAIFree 镜像，就不难理解 Fuclaude 镜像是 Claude 的镜像站点了。目前镜像支持 OAuth2 登录，这也跟 OAIFree 用法相似，避免直接泄露 Token，同样支持会话隔离、过期时间等诸多功能。
+
+## 功能介绍
+
+- 支持 FreeBSD 系统（Serv00）部署。
+
+- 支持 全流程代理，接码、注册均已搞定（注册需要国外手机号）。
+
+- 支持 Oauth2 登录，跟 OAIFree 用法相似，避免直接泄露 Token。
+
+- 完美支持会话隔离，通过 Oauth2 登录实现，跟 OAIFree 的 Share Token 差不多。
+
+- 支持接入 道德审查，默认使用模型 text-moderation-latest 。
+
+- 支持 sessionKey 获取，接口 /api/auth/session。
+
+- 支持配置站点密码，原生保护你的镜像站点。
+
+- 支持配置过期时间 expire。
+
+<br></br>
+
+<Image src="/fuclaude.png" width={1206} height={708} alt="fucluade"/>
+
+## 登录使用
+
+### 邮箱登录
+
+点击 <Link href="https://demo.fuclaude.com/" target="_blank" className="text-blue-500">前往Fuclaude</Link>，使用您 Claude 的注册邮箱直接登录。或者，使用您自行部署的地址进行邮箱登录。
+
+- 目前 Fuclaude 已代理 Claude 接码，不必担心获取不到验证码。
+
+
+### Session Token 登录
+
+首先，按上一节 Session Token 的步骤获取 Session Token。或者，使用您自行部署的地址获取 Session Token。再 <Link href="https://demo.fuclaude.com/" target="_blank" className="text-blue-500"> 前往Fuclaude </Link>使用 Session Token 登录镜像服务。
+
+### Oauth 获取链接
+
+- 请确保替换 `YOURDOMAIN` 为你的域名，`SESSION_KEY` 为你的 Session Token，`UNIQUE_NAME` 为你的独一无二的名称。
+
+<br></br>
+
+
+<CodeTabs
+  codes={{
+    Curl: `curl 'http://YOURDOMAIN/manage-api/auth/oauth_token' \\
+    -H 'Content-Type: application/json' \\
+    -d '{
+        "session_key": SESSION_KEY,
+        "unique_name": UNIQUE_NAME
+    }'`,
+    Python: `import requests
+
+domain = 'YOURDOMAIN'  # 替换为你的域名
+session_key = 'SESSION_KEY'  # 替换为你的 Session Token
+unique_name = 'UNIQUE_NAME'  # 替换为你的独一无二的名称
+
+response = requests.post(
+    url=f"http://{domain}/manage-api/auth/oauth_token",
+    headers={'Content-Type': 'application/json'},
+    json={
+        'session_key': session_key,
+        'unique_name': unique_name
+    })
+
+login_url = response.json().get('login_url')`,
+    Javascript: `const domain = 'YOURDOMAIN';  // 替换为你的域名
+const sessionKey = 'SESSION_KEY';  // 替换为你的 Session Token
+const uniqueName = 'UNIQUE_NAME';  // 替换为你的独一无二的名称
+
+const url = \`http://\${domain}/manage-api/auth/oauth_token\`;
+
+const data = {
+    session_key: sessionKey,
+    unique_name: uniqueName
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    const loginUrl = data.login_url;
+    // 你可以在这里处理 loginUrl
+    console.log(loginUrl);
+})
+.catch(error => {
+    console.error('Error:', error);
+});`
+  }}
+/>
+
+## 部署使用
+
+### 手动部署
+
+前往 <Link href="https://github.com/wozulong/fuclaude/" target="_blank" className="text-blue-500">【Fuclaude 啥也不是】 - Github</Link> 查看最新版本的 Fuclaude。
+
+在仓库的 Release 页面下载最新版本的 Fuclaude，解压后自行食用。
+
+### Docker-compose 部署
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    "Docker-compose": `version: '3'
+services:
+  fuclaude:
+    image: pengzhile/fuclaude
+    ports:
+      - "127.0.0.1:8181:8181"
+    environment:
+        # 时区（不需要改动）
+      - TZ=Asia/Shanghai
+        # 绑定的端口号（不需要改动）（改动需要把映射也一起改动）
+      - FUCLAUDE_BIND=0.0.0.0:8181
+        # 超时时间（不需要改动）
+      - FUCLAUDE_TIMEOUT=600
+        # 代理URL  socks5://username:password@ip:port （http也一样格式）
+      - FUCLAUDE_PROXY_URL=
+        # 是否执行真实的登出操作（true/false）（不需要改动）
+      - FUCLAUDE_REAL_LOGOUT=false
+        # 访问站点的密码（如果需要）
+      - FUCLAUDE_SITE_PASSWORD=
+        # Cookie加密的密钥（不需要改动）
+      - FUCLAUDE_COOKIE_SECRET=1234567890abcdefghijklmnopqrstuv
+        # 道德审查，使用OAI的基础URL
+      - FUCLAUDE_OPENAI_BASE_URL=https://api.openai.com/v1
+        # 道德审查，使用OAI的密钥
+      - FUCLAUDE_OPENAI_API_KEY=sk-xxx
+        # 启用或禁用内容审核、道德审查（true/false）
+      - FUCLAUDE_MODERATION_ENABLED=false
+        # 启用或禁用用户注册（true/false）
+      - FUCLAUDE_SIGNUP_ENABLED=false
+        # 显示或隐藏会话密钥（true/false）
+      - FUCLAUDE_SHOW_SESSION_KEY=false
+    restart: unless-stopped`
+  }}
+/>

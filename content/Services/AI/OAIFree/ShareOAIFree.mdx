@@ -1,0 +1,64 @@
+<br></br>
+
+import Link from 'next/link';
+import { Callout } from 'nextra/components';
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
+
+# 共享镜像 OAIFree
+
+<Callout type="error">
+    2024年11月27日，OAIFree 宣布关停，详情见 
+    
+    <TopicHoverCard topicId="272012" defaultTitle="there is no wall" />
+</Callout>
+
+
+## 功能介绍
+
+<Link href="https://shared.oaifree.com" target="_blank" className="text-blue-500">shared.oaifree.com</Link>，点开就用，刷新就换号，来一次大抽奖，玩的就是心跳。
+
+- 为防止有人恶意破坏，已在对话接口加上官方的道德审查。
+- 加入道德审查处罚统计，按天展示 `恶人榜`。
+- 加入捐赠统计的 `大善人榜` 和 `用量统计` 。
+- 接入 LINUX DO 登录，1级 及以上用户可用。
+- 已支持投递 Access Token。
+- AdGuard 会导致一直跳转本页，无法正常使用。
+
+榜单可前往 <Link href="https://shared.oaifree.com/dashboard" target="_blank" className="text-blue-500">Dashboard</Link> 查询，也可在论坛的 侧栏 - 外部链接 - Shared Chat 进行访问。
+
+### 如何投递 Access Token
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    Curl: `curl -X PUT 'https://shared.oaifree.com/share/tokens' \\
+    -H 'Content-Type: application/json' \\
+    -d '{
+        "tokens": [
+            "fk-1",
+            "fk-2", 
+            "access token"
+        ]
+    }'`,
+    Python: `import requests
+
+url = 'https://shared.oaifree.com/share/tokens'
+headers = {
+    'Content-Type': 'application/json',
+}
+data = {
+    "tokens": [
+        "fk-1",
+        "fk-2",
+        "access token"
+    ]
+}
+response = requests.put(url, headers=headers, json=data)
+
+print(response.status_code)
+print(response.json())`
+  }}
+/>
+

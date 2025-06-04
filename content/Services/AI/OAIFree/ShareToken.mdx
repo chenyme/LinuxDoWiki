@@ -1,0 +1,127 @@
+<br></br>
+
+import Link from 'next/link';
+import { Callout, Tabs } from 'nextra/components';
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs';
+
+# Share Token
+
+Share Token 起源于始皇的 旧版镜像 Pandora，它的作用是映射一个 Access Token。你可以用你的 Access Token 来生成一个 Share Token ，生成的 Share Token 可以像 Access Token 一样使用。
+
+同一个访问令牌 Access Token 可以生成多个共享令牌 Share Token，每个共享令牌通过独特的名称 Unique name 开启会话隔离。这样做不仅可以防止你的访问令牌泄露，还能在分享账号的同时保障安全。
+
+- 可以实现会话隔离，不同的共享令牌使用者的对话记录不会相互看到。
+- 可以设定共享令牌的过期时间，以便在需要时让共享令牌失效。
+- 可自定义 Token 使用网站，限制 Token 的使用范围。
+
+## 获取方式
+
+### 服务接口获取
+
+点击 <Link href="https://chat.oaifree.com/token" target="_blank" className="text-blue-500">前往服务接口</Link> 填写表单，获取 Share Token，参数详细说明：
+
+| 参数 | 类型 | 说明 |
+|----------------------|-----------|------------------------------------------------|
+| `Unique Name`        | `string`  | 共享令牌的名称，用于区分不同的用户             |
+| `Access Token`       | `string`  | 访问令牌，用于生成共享令牌                     |
+| `Expires In`         | `int`     | 共享令牌的有效期，单位为秒                     |
+| `Site Limit`         | `string`  | 限制共享令牌的使用网站，为空则不限制                       |
+| `GPT35 Limit`        | `int`     | 限制共享令牌的 GPT-3.5 使用次数，为空则不限制  |
+| `GPT4 Limit`         | `int`     | 限制共享令牌的 GPT-4 使用次数，为空则不限制    |
+| `Show Conversations` | `bool`    | 是否不显示对话记录，`true` 为显示，`false` 为不显示 |
+| `Show User Info`     | `bool`    | 是否显示用户信息，`true` 为显示，`false` 为不显示      |
+| `Reset Limit`        | `bool`    | 是否重置限制，`true` 为重置，`false` 为不重置              |
+| `Temporary Chat`     | `bool`    | 是否为临时对话，`true` 为强制临时对话，`false` 为不是临时对话 |
+
+
+### 通过 Access Token 获取
+
+- 首先，你需要有 Access Token，然后你就可以通过 Access Token 来获取不同的 Share Token。
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    Curl: `curl -X POST "https://chat.oaifree.com/token/register" \\
+     -H "Content-Type: application/x-www-form-urlencoded" \\
+     -d "access_token=ACCESS_TOKEN" \\
+     -d "unique_name=UNIQUE_NAME" \\
+     -d "expire_in=0" \\
+     -d "show_userinfo=false" \\
+     -d "gpt35_limit=-1" \\
+     -d "gpt4_limit=-1" \\
+     -d "reset_limit=false" \\
+     -d "show_conversations=true" \\
+     -d "site_limit=" \\
+     -d "temporary_chat=true"`,
+    Python: `import json
+import requests
+
+data = {
+    "access_token": ACCESS_TOKEN,  # 用户的访问令牌
+    "unique_name": UNIQUE_NAME,  # 独一无二的共享令牌名称
+    "expire_in": 0,  # 共享令牌的过期秒数，为0取Access Token过期时间，负数吊销分享令牌
+    "show_userinfo": False,  # 是否显示用户信息，true为显示，false为不显示
+    "gpt35_limit": -1,  # GPT-3.5模型的使用限制，为-1表示不限制
+    "gpt4_limit": -1,  # GPT-4模型的使用限制，为-1表示不限制
+    "reset_limit": False,  # 是否重置使用限制
+    "show_conversations": True,  # 是否显示对话记录，true为显示，false为不显示
+    "site_limit": "",  # 站点使用限制，为空表示不限制
+    "temporary_chat": True  # 是否开启临时聊天功能
+}
+
+response = requests.post('https://chat.oaifree.com/token/register', headers={'Content-Type': 'application/x-www-form-urlencoded'}, data=data)
+token_key = response.json().get("token_key")`,
+    Javascript: `const data = {
+    access_token: 'ACCESS_TOKEN',  // 用户的访问令牌
+    unique_name: 'UNIQUE_NAME',  // 独一无二的共享令牌名称
+    expire_in: 0,  // 共享令牌的过期秒数，为0取Access Token过期时间，负数吊销分享令牌
+    show_userinfo: false,  // 是否显示用户信息，true为显示，false为不显示
+    gpt35_limit: -1,  // GPT-3.5模型的使用限制，为-1表示不限制
+    gpt4_limit: -1,  // GPT-4模型的使用限制，为-1表示不限制
+    reset_limit: false,  // 是否重置使用限制
+    show_conversations: true,  // 是否显示对话记录，true为显示，false为不显示
+    site_limit: "",  // 站点使用限制，为空表示不限制
+    temporary_chat: true  // 是否开启临时聊天功能
+};
+
+fetch('https://chat.oaifree.com/token/register', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams(data)
+})
+.then(response => response.json())
+.then(data => {
+    const token_key = data.token_key;
+    console.log(token_key);
+})
+.catch(error => console.error('Error:', error));`
+  }}
+/>
+
+- 返回字段
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    json: `
+{
+    "access_token": （字符串）共享令牌的访问令牌,
+    "expire_at": （整型）共享令牌的过期时间，以Unix时间戳表示,
+    "gpt35_limit": （整型）GPT-3.5模型的使用限制,为-1不限制,
+    "gpt4_limit": （整型）GPT-4模型的使用限制,为-1不限制,
+    "reset_limit": （布尔值）是否重置使用限制,
+    "show_conversations": （布尔值）是否显示对话记录 true为显示，false为不显示,
+    "site_limit": （字符串）站点使用限制，为空字符串表示不限制,
+    "temporary_chat": （布尔值）是否开启临时聊天功能,
+    "token_key": （字符串）共享令牌的密钥,
+    "unique_name": （字符串）共享令牌的唯一名称,
+    "user_email": （字符串）该账号的电子邮件地址,
+    "user_id": （字符串）用户的唯一标识符
+}
+`
+}}
+/>

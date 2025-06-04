@@ -1,0 +1,19 @@
+<br></br>
+
+import Link from 'next/link';
+
+# Session Token
+
+Claude 的 Session Token 通常是一个用于身份验证的令牌，用于在与 Claude 网页端交互时进行身份验证。这个令牌类似于其他API服务的API密钥或会话令牌。Session Token 在与 Claude 的交互中起到验证和管理用户身份、保护安全、以及维护对话连续性的关键作用。
+
+类似于上一节中提到的 Access Token，Session Token 也是一个动态令牌，通常会在**重新登录账号后**过期。
+
+## 获取方法
+
+- 点击 <Link href="https://demo.fuclaude.com/" target="_blank" className="text-blue-500">前往Fuclaude</Link>，使用邮箱登录。
+
+- 登陆后再 <Link href="https://demo.fuclaude.com/api/auth/session" target="_blank" className="text-blue-500">使用此链接获取Session Token</Link>
+
+请注意，Session Token 通常会在**重新登录账号后**过期！
+
+因此，如果想保证 Session Token 的有效期足够长，请使用Fuclaude的 Session Token 登录！

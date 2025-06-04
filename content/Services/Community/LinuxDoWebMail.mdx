@@ -1,0 +1,149 @@
+<br></br>
+
+import Link from 'next/link'
+import { Cards } from 'nextra/components'
+import { Send } from '@/components/animate-ui/icons/send'
+import { UserHoverCard } from '@/components/common/UserHoverCard'
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+
+
+# Linux Do 社区邮箱
+
+经过一轮轮的测试，LINUX DO Mail 终于开始向佬友们开放了！
+
+恳请佬友们共同爱护我们的 LINUX DO Mail ！我们更希望看到的是大家羡慕 `@linux.do` 和以拥有一枚 `@linux.do` 邮箱为荣，而不是讨厌、屏蔽这个邮箱后缀。
+
+如果 `@linux.do` 的邮件进了你的垃圾邮件类别，还请认真判别后将其移出，这很有帮助；如果 `@linux.do` 的邮件骚扰了你，请转发那封骚扰邮件给 admin@linux.do，我们将及时严肃处理！
+
+<br></br>
+
+<Cards.Card
+  icon={<Send animate/>}
+  title="webmail.linux.do"
+  href="https://webmail.linux.do"
+  target="_blank"
+  arrow
+/>
+
+## 如何申请
+
+佬友们可自行前往 <Link href="https://connect.linux.do/" target="_blank" className="text-blue-500">LINUX DO Connect</Link> 申请（目前限制在 3 级用户申请，有 4k+ 成员），通过后会收到包含登录信息的站内私信。
+
+**请留意申请页面的注意事项！**
+
+## 常见问题
+
+<details>
+<summary>这玩意有什么用啊，有什么福利吗？</summary>
+就正常的邮件发送功能，没有额外的用处。如果说有，那帅就完了。
+</details>
+
+<details>
+<summary>获得邮箱后，掉到 2 级有影响吗？</summary>
+会留作纪念，不影响使用。
+</details>
+
+<details>
+<summary>我是去年的邮箱老用户，怎么恢复？</summary>
+可自行前往 LINUX DO Connect 填入老的邮箱号进行恢复。会直接弹出初始密码，注意保存。同样需要 3 级，没到也没关系，邮箱名已为你保留，到了即可取。
+</details>
+
+<details>
+<summary>获得邮箱后，论坛账号被封有影响吗？</summary>
+有影响，邮箱账号会一起封掉（短期封禁一般不影响邮箱）。请爱惜你的账号！
+</details>
+
+<details>
+<summary>申请了很久没有收到包含登录的私信？</summary>
+一般白天的申请，基本不会超过 1 个小时审批。超过可能是因为你的邮箱名未通过审批。
+</details>
+
+<details>
+<summary>我的邮箱名可能有问题，怎么修改？</summary>
+目前不能修改，应该等这波申请热潮过去我才有空去处理。
+</details>
+
+<details>
+<summary>什么样的邮箱名不容易通过？</summary>
+如果你申请的邮箱地址看起来像 LINUX DO 官方的某个服务、部门、职位，那就不容易通过。事实上你觉得它可能不会过，那应该就不会过。
+</details>
+
+<details>
+<summary>为什么不直接按照论坛用户名直接发？</summary>
+首先论坛用户名相较邮箱名更随意一些，有些是不能用作邮箱名的。其次，如果一一对应，相当于直接暴露L站通讯录。最后，有些佬友用户名不错，但并没有申请邮箱的打算，算是空占用了。
+</details>
+
+<details>
+<summary>申请页面提示 `你今天已尝试太多次了` 怎么办？</summary>
+从你第一次申请开始，24 小时内你最多只能提交 20 次申请，过期重置。
+</details>
+
+<details>
+<summary>我访问 Webmail 无法通过 Cloudflare 的人机验证怎么办？</summary>
+请更换网络或浏览器重试。事实上等你配置好第三方邮件客户端，就不怎么需要访问网页了。
+</details>
+
+<details>
+<summary>能否给 Webmail 添加 PWA 支持？</summary>
+作为一个标准的邮箱，我们并不推荐你只在网页上使用。更好的方式是配置在第三方客户端中使用，这样使用会更丝滑，通知之类的也更到位。
+</details>
+
+<details>
+<summary>如何进行第三方邮件客户端配置？</summary>
+请参考 <Link href="https://webmail.linux.do/admin/client" target="_blank" className="text-blue-500">客户端设置</Link> 页面进行配置。`pop3/smtp/imap` 地址都为 `mail.linux.do`。如果你是 `macOS/iOS` 自带客户端，建议从该页面底部下载描述文件进行配置。
+</details>
+
+<details>
+<summary>我在第三方客户端配置时应该使用直接使用我的密码吗？</summary>
+**不推荐！** 更好的方式是前往 <Link href="https://webmail.linux.do/admin/token/list" target="_blank" className="text-blue-500">认证令牌页面</Link> 生成专用的令牌，它可以在配置时当作密码使用。这不会泄露你的密码，也方便随时撤销。
+</details>
+
+<details>
+<summary>我应该为了方便记忆设置一个通用或简单的密码吗？</summary>
+**不推荐！** 这容易导致账号被盗，从而失去你的账号。如果盗号者拿去发送垃圾邮件，则影响会更加恶劣。
+</details>
+
+<details>
+<summary>我改密码改到自己都记不得了，怎么办？</summary>
+那还能怎么办，当然是私信 <UserHoverCard username='neo' /> 了。我劝你还是上点心。
+</details>
+
+<details>
+<summary>我感觉有些地方连不上服务器？</summary>
+是的，由于一些众所周知的原因，有些地方是可能连不上（你可能需要代理）。不过你可以在一些大厂邮箱设置中对 LINUX DO Mail 进行代收。比如，如果你在 QQ 邮箱设置了代收，你甚至能配置收件微信通知。
+</details>
+
+<details>
+<summary>我发送邮件到有些邮箱会被认为是垃圾邮件，比如 Outlook 系列？</summary>
+Outlook 自己也会进 Outlook 的垃圾邮箱。其实更多的还是跟你发送的邮件内容有关系。
+</details>
+
+<details>
+<summary>LINUX DO Mail 收信怎么感觉有些慢？</summary>
+别的邮箱有反垃圾邮件系统，咱 LINUX DO Mail 也是有的。有时候你发信过来，我们的反垃圾邮件系统认为你打分低，就会触发 `greylisting` 你就得重新发才会认为你是没问题的（具体请去了解相关技术原理）。有时候可能会让你重发几次，这就导致了收信慢。
+</details>
+
+<details>
+<summary>LINUX DO Mail 的发信额度是多少？</summary>
+目前为 `50/day`。通常这是一个够用的数字，因为邮箱大多数时候都是接收邮件。后续会根据具体情况动态调整。
+</details>
+
+<details>
+<summary>LINUX DO Mail 是否支持别名？</summary>
+支持 `+` 分割的别名。比如你的邮箱是 `abc@linux.do` 那么接收人是 `abc+任意字符@linux.do` 你都能收到邮件。
+</details>
+
+<details>
+<summary>我是否可以将我的 LINUX DO Mail 用来发送垃圾邮件？</summary>
+**这是绝对禁止的事情！** 一旦收到报告，最轻也是封禁邮箱账号。请共同维护 LINUX DO Mail 的名声。
+</details>
+
+<details>
+<summary>我是否可以使用 LINUX DO Mail 注册/绑定 LINUX DO 账号？</summary>
+不可以。早期保有量比较低的时候允许，但现在已经 2k+ 的数量，我承认做不好这个风控。
+</details>
+
+<details>
+<summary>还有更多技术细节吗？</summary>
+更多请看大佬做的技术评测帖：<TopicHoverCard topicId="437320" defaultTitle="【测评】LINUX DO Mail 域名邮箱详细分析与测评报告" />
+</details>

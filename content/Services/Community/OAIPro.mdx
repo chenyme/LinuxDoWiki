@@ -1,0 +1,44 @@
+<br></br>
+
+import Link from 'next/link';
+import { Callout } from 'nextra/components';
+
+# Chat2API - OAIPro
+
+Neo 对 api.openai.com 的 API 代理中转站，此服务为社区官方，为了方便无法使用 OpenAI 官方 API 的朋友使用，提供了一个稳定的代理服务，因此费率与官方完全一致。主打交个朋友，不套路，不套娃，不以次充好，不使用各种 chat2api 项目。
+
+## 功能介绍
+
+
+<Callout emoji="">
+    **✨ 没有技巧 ✨ 只是官代 ✨**
+
+    - 没有特色，稳定不折腾，踏踏实实用。折腾过就会确信：时间就是金钱，稳定压倒一切。
+
+    - 直接代理官方接口：`https://api.openai.com`。实打实付费key，为付费不方便的朋友提供便利。
+
+    - 美卡直接绑官方支付，直来直去。不套娃、不套路、不以次充好、不使用各种 chat2api 项目。
+
+    - 模型全、余额不会过期，随时用。在一些紧要的关头不失为一种很好的兜底手段，有备无患。
+
+    - 试用是没有试用的，因Stripe支付手续费原因，利太薄，权当跟大家交个朋友。
+
+    - 费率跟官方完全一致，所以不另外在此列出，大家可以直接阅读官方的费率文档。
+
+</Callout>
+
+## 使用说明
+
+<Callout type="info">
+    此服务使用方法与 OpenAI 官方 API 一致。
+</Callout>
+
+1. 先前往 <Link href="https://api.oaipro.com/" target="_blank" style={{ textDecoration: 'none', color: '#3A9FE8' }}>api.oaipro.com</Link>，使用 Linux Do Connect 登录。
+
+2. 由于 Neo 是公益给大家的，没有试用，如有需要可以去 `钱包` 内充值余额。
+
+3. 充值完毕后前往 `令牌` 页面，点击 **`添加令牌`**，即可获取到你的 API Key。
+
+- 接着可以前往 `聊天` 页面 - 点击左上角头像 - `应用设置` - `语言模型`，接着填入你刚刚获取的 API Key，API 代理地址为 `https://api.oaipro.com/v1`，即可开始使用。
+
+- 也可以通过 Curl、Python、Java 进行 API 调用。具体调用方法和 OpenAI 官方一致，只需要将参数的 base_url 替换为 `https://api.oaipro.com/v1` ，  api_key 替换为你刚刚获取的 API Key 即可开始使用。

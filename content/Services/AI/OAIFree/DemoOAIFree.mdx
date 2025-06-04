@@ -1,0 +1,37 @@
+<br></br>
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { Callout } from 'nextra/components';
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+
+# 旧版镜像 Pandora
+
+<Callout type="error">
+    2024年1月22日，PandoraNext 宣布关停，详情见 
+    
+    <TopicHoverCard topicId="1051" defaultTitle="你们赢了，但我却没有输" />
+</Callout>
+
+
+## 功能介绍
+
+说起 Demo.oaifree.com 大家稍微有点陌生，但这其实是大名鼎鼎的 Pandora/PandoraNext 的怀旧版本。
+
+此镜像版本的功能和新版镜像几乎相同，只是不可以使用 GPTs 而已，但是它可以真正做到完美隔离对话和账号信息。
+
+<br></br>
+
+<Image src="/demo.png" width={896} height={512} alt="demo"/>
+
+## 使用方式
+
+ - 1. 通过始皇的<Link href="https://token.oaifree.com/auth" target="_blank" className="text-blue-500"> Access Token </Link>服务获取 Access Token
+
+ - 2. 使用 Access Token 在始皇的<Link href="https://chat.oaifree.com/token" target="_blank" className="text-blue-500"> Share Token </Link>服务获取 Share Token（**可选**）
+
+ - 3. 打开<Link href="https://demo.oaifree.com" target="_blank" className="text-blue-500"> demo.oaifree.com </Link>，填入 Access Token 或者 Share Token，即可使用！
+
+<br></br>
+
+
