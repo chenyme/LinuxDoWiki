@@ -1,11 +1,15 @@
-import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Banner, Head, Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import { Head, Search } from 'nextra/components'
+import { LastUpdated } from 'nextra-theme-docs'
+import { Footer, Layout, Navbar } from 'nextra-theme-docs'
+
 import './globals.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import { LastUpdated } from 'nextra-theme-docs'
- 
+import {Inter, Noto_Sans_SC} from 'next/font/google';
+import { ScrollProgress } from '@/components/animate-ui/components/scroll-progress';
+import NavbarOAuthButton from '@/components/common/NavbarOAuthButton';
+
 export const metadata = {
   title: 'Linux Do Wiki',
   description: 'Linux Do Wiki',
@@ -14,8 +18,18 @@ export const metadata = {
   },
 }
 
-// 横幅
-const banner = <Banner storageKey="some-key">Linux Do Wiki is released 🎉</Banner>
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const notoSansSC = Noto_Sans_SC({
+  variable: '--font-noto-sans-sc',
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+});
 
 // 导航栏
 const navbar = (
@@ -23,11 +37,12 @@ const navbar = (
     logo={
       <div className='flex items-center gap-2'>
         <Image src="/favicon.ico" alt="Linux Do Wiki" width={32} height={32} /> 
-        <b>Linux Do Wiki</b>
+        <span className='text-base font-bold'>LINUX DO WIKI</span>
       </div>
     }
-    projectLink="https://github.com/Chenyme/linux-do-wiki"
-  />
+  >
+    <NavbarOAuthButton />
+  </Navbar>
 )
 
 // 搜索
@@ -50,11 +65,12 @@ const footer = <Footer>
   </div>
 </Footer>
  
-export default async function RootLayout({ children }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="zh-CN"
       dir="ltr"
+      className={`${inter.variable} ${notoSansSC.variable} hide-scrollbar font-sans`}
       suppressHydrationWarning
     >
       <Head
@@ -68,9 +84,12 @@ export default async function RootLayout({ children }) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
       </Head>
-      <body>
+      <body
+        className={`${inter.variable} ${notoSansSC.variable} hide-scrollbar font-sans antialiased`}
+      >
+        {/* 全局滚动进度条 */}
+        <ScrollProgress />
         <Layout
-          banner={banner}
           navbar={navbar}
           pageMap={await getPageMap()}
           search={search}

@@ -1,5 +1,7 @@
 export default {
     index: '首页',
+    tools: '百宝箱',
+    honor: '共建荣誉墙',
     'Linux Do': {
         type: 'separator',
         title: '社区概览',
@@ -17,9 +19,4 @@ export default {
         title: '其他信息',
     },
     Encyclopedia: '社区百科',
-    'Link': {
-        type: 'page',
-        title: '访问社区',
-        href: 'https://linux.do',
-    },
 }
