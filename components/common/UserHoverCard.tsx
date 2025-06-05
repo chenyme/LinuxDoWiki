@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
 } from '@/components/animate-ui/radix/hover-card';
 import { useUserData } from '@/hooks/useDataCache';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 /**
  * UserHoverCard 组件属性接口
@@ -71,14 +71,10 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-1 cursor-pointer align-middle no-underline hover:no-underline transition-opacity hover:opacity-80"
           >
-            <Image
-              src={getAvatarUrl('96')}
-              alt={`${getDisplayName()}的头像`}
-              className="size-5 rounded-full align-middle"
-              width={24}
-              height={24}
-              loading="lazy"
-            />
+            <Avatar className="size-5">
+              <AvatarImage src={getAvatarUrl('96')} alt={`${getDisplayName()}的头像`} />
+              <AvatarFallback>{username.substring(0, 2).toUpperCase()}</AvatarFallback>
+            </Avatar>
             <span className="align-middle items-center justify-center">@{username}</span>
           </Link>
         </HoverCardTrigger>
@@ -86,14 +82,10 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
         <HoverCardContent className="w-80">
           <div className="flex flex-col gap-4">
             {/* 用户头像 */}
-            <Image
-              className="size-16 rounded-full border"
-              src={getAvatarUrl('288')}
-              alt={`${getDisplayName()}的头像`}
-              width={64}
-              height={64}
-              loading="lazy"
-            />
+            <Avatar className="size-16 border">
+              <AvatarImage src={getAvatarUrl('288')} alt={`${getDisplayName()}的头像`} />
+              <AvatarFallback>{username.substring(0, 2).toUpperCase()}</AvatarFallback>
+            </Avatar>
             
             {/* 用户信息 */}
             <div className="flex flex-col gap-4">

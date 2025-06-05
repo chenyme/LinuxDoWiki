@@ -9,6 +9,7 @@ import {
   HoverCardContent,
 } from '@/components/animate-ui/radix/hover-card';
 import { useTopicData } from '@/hooks/useDataCache';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 /**
  * TopicHoverCard 组件属性接口
@@ -158,9 +159,12 @@ export const TopicHoverCard = ({ topicId, defaultTitle }: TopicHoverCardProps) =
 
           {/* 作者信息 */}
           <div className="flex items-center gap-2 p-2 rounded-md bg-gray-50 dark:bg-gray-900">
-            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-white text-xs font-medium">
-              {topicData.details.created_by.username.charAt(0).toUpperCase()}
-            </div>
+            <Avatar className="size-6">
+              <AvatarImage src={`https://linux.do/user_avatar/linux.do/${topicData.details.created_by.username}/96/`} alt={topicData.details.created_by.username} />
+              <AvatarFallback className="bg-gradient-to-br from-violet-400 to-purple-500">
+                {topicData.details.created_by.username.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-medium text-gray-900 dark:text-gray-100">
                 @{topicData.details.created_by.username}

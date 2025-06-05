@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/animate-ui/radix/hover-card';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 /**
  * 用户数据接口
@@ -199,18 +199,13 @@ export const UserGroupTooltip = ({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <div className={`${avatarSizeClass} border-3 border-background cursor-pointer rounded-full relative flex shrink-0 overflow-hidden`}>
-                  <Image 
-                    src={getAvatarUrl(user.username)} 
-                    alt={getDisplayName(user.username)} 
-                    className="h-full w-full object-cover"
-                    width={48}
-                    height={48}
-                  />
-                  {/* Fallback if image fails to load */}
-                  <div className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br ${getRandomGradient(user.username)} opacity-0 group-[.has-error]:opacity-100`}>
-                    {user.username.substring(0, 2).toUpperCase()}
-                  </div>
+                <div className={`${avatarSizeClass} border-3 border-background cursor-pointer relative flex shrink-0 overflow-hidden`}>
+                  <Avatar className="h-full w-full">
+                    <AvatarImage src={getAvatarUrl(user.username)} alt={getDisplayName(user.username)} />
+                    <AvatarFallback className={`bg-gradient-to-br ${getRandomGradient(user.username)}`}>
+                      {user.username.substring(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
               </Link>
             </HoverCardTrigger>
@@ -219,19 +214,12 @@ export const UserGroupTooltip = ({
               <div className="flex flex-col gap-4">
                 {/* 用户头像 */}
                 <div className="flex items-center gap-4">
-                  <div className="size-16 border rounded-full overflow-hidden relative flex shrink-0">
-                    <Image 
-                      src={getAvatarUrl(user.username)} 
-                      alt={getDisplayName(user.username)} 
-                      className="h-full w-full object-cover"
-                      width={64}
-                      height={64}
-                    />
-                    {/* Fallback if image fails to load */}
-                    <div className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br ${getRandomGradient(user.username)} opacity-0 group-[.has-error]:opacity-100`}>
+                  <Avatar className="size-16 border">
+                    <AvatarImage src={getAvatarUrl(user.username)} alt={getDisplayName(user.username)} />
+                    <AvatarFallback className={`bg-gradient-to-br ${getRandomGradient(user.username)}`}>
                       {user.username.substring(0, 2).toUpperCase()}
-                    </div>
-                  </div>
+                    </AvatarFallback>
+                  </Avatar>
                   
                   <div>
                     <div className="font-bold text-foreground">
