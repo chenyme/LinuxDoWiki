@@ -129,8 +129,7 @@ export const UserGroupTooltip = ({
         [username]: { data: data.user, loading: false, error: false }
       }));
     } catch (error) {
-      console.warn(`Failed to fetch data for user ${username}:`, error);
-      
+      // 静默失败，设置默认数据
       setUsersData(prev => ({
         ...prev,
         [username]: {
@@ -138,14 +137,14 @@ export const UserGroupTooltip = ({
             id: 0,
             username: username,
             name: username,
-            avatar_template: '',
-            bio_excerpt: '',
+            avatar_template: '/logo.png',
+            bio_excerpt: '这是一个神秘的用户',
             trust_level: 0,
-            created_at: '',
+            created_at: new Date().toISOString(),
             gamification_score: 0,
           },
           loading: false,
-          error: true
+          error: false
         }
       }));
     }
@@ -165,10 +164,10 @@ export const UserGroupTooltip = ({
   // 获取用户头像URL
   const getAvatarUrl = (username: string): string => {
     const userData = usersData[username];
-    if (!userData || userData.error || !userData.data?.avatar_template) {
+    if (!userData || !userData.data?.avatar_template || userData.data.avatar_template === '/logo.png') {
       return DEFAULT_CONFIG.AVATAR_URL;
     }
-    return userData.data.avatar_template.replace('/{size}', '');
+    return `https://linux.do${userData.data.avatar_template.replace('/{size}', '')}`;
   };
   
   // 获取用户显示名称

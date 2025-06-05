@@ -2,6 +2,7 @@
 
 import { useCallback } from 'react';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import {
   HoverCard,
   HoverCardTrigger,
@@ -79,43 +80,49 @@ export const TopicHoverCard = ({ topicId, defaultTitle }: TopicHoverCardProps) =
    * 渲染错误状态（未公开话题）
    */
   const renderErrorContent = () => (
-    <div className="flex flex-col gap-6 p-2">
-      {/* 错误图标和标题 */}
-      <div className="flex items-center gap-3">
-        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center">
-          <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="p-4"
+    >
+      {/* 错误状态头部 */}
+      <div className="flex items-start gap-3 mb-4">
+        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-950 flex items-center justify-center">
+          <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
           </svg>
         </div>
-        <div>
-          <h3 className="font-semibold text-foreground">无法访问该话题</h3>
-          <p className="text-sm text-muted-foreground">话题 #{topicId}</p>
+        <div className="flex-1">
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
+            私密话题
+          </h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+            话题 #{topicId}
+          </p>
         </div>
       </div>
 
       {/* 错误说明 */}
-      <div className="bg-muted/50 rounded-lg p-4">
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {DEFAULT_CONFIG.ERROR_MESSAGE.replace('\n', ' ')}
+      <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3 mb-4">
+        <p className="text-xs text-gray-600 dark:text-gray-300">
+          这是一个私密话题，您可能没有权限查看请求的资源。
         </p>
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-foreground">您可以尝试：</p>
-        <Link
-          href={`${DEFAULT_CONFIG.TOPIC_BASE_URL}${topicId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-          访问 Linux Do 话题 #{topicId}
-        </Link>
-      </div>
-    </div>
+      <Link
+        href={`${DEFAULT_CONFIG.TOPIC_BASE_URL}${topicId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group inline-flex items-center justify-center gap-2 w-full px-3 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-md transition-colors text-xs font-medium hover:bg-gray-800 dark:hover:bg-gray-200"
+      >
+        <svg className="w-3 h-3 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+        尝试访问话题
+      </Link>
+    </motion.div>
   );
 
   /**
@@ -125,46 +132,59 @@ export const TopicHoverCard = ({ topicId, defaultTitle }: TopicHoverCardProps) =
     if (!topicData) return null;
 
     return (
-      <div className="flex flex-col gap-6 p-2">
-        {/* 话题标题和基本信息 */}
-        <div className="space-y-3">
-          <div>
-            <h3 className="font-bold text-foreground leading-tight line-clamp-3 text-lg">
-              {topicData.title}
-            </h3>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="p-4"
+      >
+        {/* 话题头部 */}
+        <div className="mb-4">
+          <div className="flex items-start gap-3 mb-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-950 flex items-center justify-center">
+              <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-tight line-clamp-2 mb-1">
+                {topicData.title}
+              </h3>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                 #{topicId}
               </span>
             </div>
           </div>
 
           {/* 作者信息 */}
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-bold">
+          <div className="flex items-center gap-2 p-2 rounded-md bg-gray-50 dark:bg-gray-900">
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-white text-xs font-medium">
               {topicData.details.created_by.username.charAt(0).toUpperCase()}
             </div>
-            <span className="text-muted-foreground">作者</span>
-            <span className="font-medium text-foreground">@{topicData.details.created_by.username}</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-medium text-gray-900 dark:text-gray-100">
+                @{topicData.details.created_by.username}
+              </p>
+            </div>
           </div>
         </div>
 
         {/* 标签 */}
         {topicData.tags && topicData.tags.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-foreground">标签</p>
-            <div className="flex flex-wrap gap-2">
-              {topicData.tags.slice(0, 5).map((tag, index) => (
+          <div className="mb-4">
+            <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">标签</p>
+            <div className="flex flex-wrap gap-1">
+              {topicData.tags.slice(0, 4).map((tag, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 text-green-700 dark:text-green-300 rounded-full text-xs font-medium"
+                  className="inline-flex items-center px-2 py-0.5 rounded-md text-xs bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300"
                 >
                   {tag}
                 </span>
               ))}
-              {topicData.tags.length > 5 && (
-                <span className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-xs">
-                  +{topicData.tags.length - 5}
+              {topicData.tags.length > 4 && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+                  +{topicData.tags.length - 4}
                 </span>
               )}
             </div>
@@ -172,75 +192,61 @@ export const TopicHoverCard = ({ topicId, defaultTitle }: TopicHoverCardProps) =
         )}
 
         {/* 统计信息 */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium text-foreground">话题统计</p>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">回复</span>
-                <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                  {formatNumber(topicData.posts_count)}
-                </span>
+        <div className="mb-4">
+          <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">统计数据</p>
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              { label: '回复', value: topicData.posts_count, icon: '💬' },
+              { label: '浏览', value: topicData.views, icon: '👁️' },
+              { label: '点赞', value: topicData.like_count, icon: '❤️' },
+              { label: '参与', value: topicData.participant_count, icon: '👥' }
+            ].map((stat, index) => (
+              <div
+                key={stat.label}
+                className="text-center p-2 rounded-md bg-gray-50 dark:bg-gray-900"
+              >
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">{stat.label}</div>
+                <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  {formatNumber(stat.value)}
+                </div>
               </div>
-            </div>
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">浏览</span>
-                <span className="text-lg font-bold text-green-600 dark:text-green-400">
-                  {formatNumber(topicData.views)}
-                </span>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">点赞</span>
-                <span className="text-lg font-bold text-pink-600 dark:text-pink-400">
-                  {formatNumber(topicData.like_count)}
-                </span>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">参与</span>
-                <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
-                  {formatNumber(topicData.participant_count)}
-                </span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* 时间信息 */}
-        <div className="space-y-2 pt-4 border-t border-border/50">
-          <div className="flex justify-between items-center text-xs text-muted-foreground">
-            <span>创建时间</span>
-            <span className="font-medium">{formatDate(topicData.created_at)}</span>
-          </div>
-          <div className="flex justify-between items-center text-xs text-muted-foreground">
-            <span>最后回复</span>
-            <span className="font-medium">{formatDate(topicData.last_posted_at)}</span>
+        <div className="pt-3 border-t border-gray-200 dark:border-gray-800">
+          <div className="space-y-1">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-500 dark:text-gray-400">创建时间</span>
+              <span className="text-gray-900 dark:text-gray-100">{formatDate(topicData.created_at)}</span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-500 dark:text-gray-400">最后回复</span>
+              <span className="text-gray-900 dark:text-gray-100">{formatDate(topicData.last_posted_at)}</span>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   };
 
   return (
-    <span className="inline-flex items-center justify-center align-middle">
+    <span className="inline-flex items-center justify-center">
       <HoverCard>
         <HoverCardTrigger asChild>
           <Link
             href={`${DEFAULT_CONFIG.TOPIC_BASE_URL}${topicId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="cursor-pointer inline-flex items-center justify-center align-middle no-underline hover:no-underline transition-all duration-200 hover:opacity-80 border-b border-dotted border-current"
-            style={{ color: error ? "#fea000" : undefined }}
+            className="cursor-pointer inline text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors underline underline-offset-2 decoration-1 hover:decoration-2"
+            style={{ color: error ? "#f59e0b" : undefined }}
           >
-            <span className="align-middle">{getTopicTitle()}</span>
+            {getTopicTitle()}
           </Link>
         </HoverCardTrigger>
         
-        <HoverCardContent className="w-[420px] max-h-[500px] overflow-y-auto">
+        <HoverCardContent className="w-80 p-0 border shadow-xl bg-white dark:bg-gray-950">
           {error ? renderErrorContent() : renderNormalContent()}
         </HoverCardContent>
       </HoverCard>

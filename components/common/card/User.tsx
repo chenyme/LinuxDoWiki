@@ -66,7 +66,7 @@ const User: React.FC<UserCardProps> = ({
             setUserData({
               name: data.user.name,
               id: data.user.id.toString().padStart(16, '0'),
-              avatar: data.user.avatar_template.replace('{size}', '96'),
+              avatar: `https://linux.do${data.user.avatar_template.replace('{size}', '96')}`,
               title: '',
               trustLevel: data.user.trust_level,
               createdAt: new Date(data.user.created_at).toISOString().split('T')[0],
@@ -75,12 +75,10 @@ const User: React.FC<UserCardProps> = ({
           } else {
             throw new Error('用户名不存在');
           }
-        } catch (e) {
-          console.error('Failed to parse user cookie or fetch data', e);
+        } catch {
           setError('获取失败');
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      } catch {
         setError('获取失败');
       } finally {
         setLoading(false);
@@ -164,7 +162,7 @@ const User: React.FC<UserCardProps> = ({
             </p>
             
             {/* 头像 */}
-            <div className="absolute top-[30px] left-[25px] w-[60px] h-[60px] rounded-full bg-[rgba(255,255,255,0.3)] shadow-[0_4px_8px_rgba(0,0,0,0.5),0_2px_4px_rgba(0,0,0,0.1)_inset] overflow-hidden">
+            <div className="absolute top-[32px] left-[30px] w-[50px] h-[50px] rounded-full bg-[rgba(255,255,255,0.3)] shadow-[0_4px_8px_rgba(0,0,0,0.5),0_2px_4px_rgba(0,0,0,0.1)_inset] overflow-hidden">
               <Avatar>
                 <AvatarImage src={userData.avatar} alt={userData.name} />
                 <AvatarFallback>{userData.name?.slice(0, 2).toUpperCase() || 'LD'}</AvatarFallback>
@@ -179,17 +177,17 @@ const User: React.FC<UserCardProps> = ({
             )}
             
             {/* 信任等级 */}
-            <p className="absolute text-xl font-bold top-[68px] left-[165px] text-[#ffb003]">
+            <p className="absolute text-xl font-bold top-[68px] left-[150px] text-[#ffb003]">
               Level {userData.trustLevel}
             </p>
             
             {/* 信任等级名称 */}
-            <p className="absolute text-3xl font-bold top-[92px] left-[165px] text-[#ffb003]">
+            <p className="absolute text-3xl font-bold top-[96px] left-[150px] text-[#ffb003]">
               {trustLevelName}
             </p>
             
             {/* 芯片 */}
-            <div className="absolute w-[50px] h-[35px] top-[97px] left-[28px]">
+            <div className="absolute w-[50px] h-[35px] top-[88px] left-[28px]">
               <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
                 <image width="50" height="50" x="0" y="0" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAB6VBMVEUAAACNcTiVeUKVeUOYfEaafEeUeUSYfEWZfEaykleyklaXe0SWekSZZjOYfEWYe0WXfUWXe0WcgEicfkiXe0SVekSXekSWekKYe0a9nF67m12ZfUWUeEaXfESVekOdgEmVeUWWekSniU+VeUKVeUOrjFKYfEWliE6WeESZe0GSe0WYfES7ml2Xe0WXeESUeEOWfEWcf0eWfESXe0SXfEWYekSVeUKXfEWxklawkVaZfEWWekOUekOWekSYfESZe0eXekWYfEWZe0WZe0eVeUSWeETAnmDCoWLJpmbxy4P1zoXwyoLIpWbjvXjivnjgu3bfu3beunWvkFWxkle/nmDivXiWekTnwXvkwHrCoWOuj1SXe0TEo2TDo2PlwHratnKZfEbQrWvPrWuafUfbt3PJp2agg0v0zYX0zYSfgkvKp2frxX7mwHrlv3rsxn/yzIPgvHfduXWXe0XuyIDzzISsjVO1lVm0lFitjVPzzIPqxX7duna0lVncuHTLqGjvyIHeuXXxyYGZfUayk1iyk1e2lln1zYTEomO2llrbtnOafkjFpGSbfkfZtXLhvHfkv3nqxH3mwXujhU3KqWizlFilh06khk2fgkqsjlPHpWXJp2erjVOhg0yWe0SliE+XekShhEvAn2D///+gx8TWAAAARnRSTlMACVCTtsRl7Pv7+vxkBab7pZv5+ZlL/UnU/f3SJCVe+Fx39naA9/75XSMh0/3SSkia+pil/KRj7Pr662JPkrbP7OLQ0JFOijI1MwAAAAFiS0dEorDd34wAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfnAg0IDx2lsiuJAAACLElEQVRIx2NgGAXkAUYmZhZWPICFmYkRVQcbOwenmzse4MbFzc6DpIGXj8PD04sA8PbhF+CFaxEU8iWkAQT8hEVgOkTF/InR4eUVICYO1SIhCRMLDAoKDvFDVhUaEhwUFAjjSUlDdMiEhcOEItzdI6OiYxA6YqODIt3dI2DcuDBZsBY5eVTr4xMSYcyk5BRUOXkFsBZFJTQnp6alQxgZmVloUkrKYC0qqmji2WE5EEZuWB6alKoKdi35YQUQRkFYPpFaCouKIYzi6EDitJSUlsGY5RWVRGjJLyxNy4ZxqtIqqvOxaVELQwZFZdkIJVU1RSiSalAt6rUwUBdWG1CP6pT6gNqwOrgCdQyHNYR5YQFhDXj8MiK1IAeyN6aORiyBjByVTc0FqBoKWpqwRCVSgilOaY2OaUPw29qjOzqLvTAchpos47u6EZyYnngUSRwpuTe6D+6qaFQdOPNLRzOM1dzhRZyW+CZouHk3dWLXglFcFIflQhj9YWjJGlZcaKAVSvjyPrRQ0oQVKDAQHlYFYUwIm4gqExGmBSkutaVQJeomwViTJqPK6OhCy2Q9sQBk8cY0DxjTJw0lAQWK6cOKfgNhpKK7ZMpUeF3jPa28BCETamiEqJKM+X1gxvWXpoUjVIVPnwErw71nmpgiqiQGBjNzbws3j1nus+fMndc+Cwm0T52/oNR9lsdCS24ra7Tq1cbWjpXV3sHRCb1idXZ0sGdltXNxRateRwHRAACYHutzk/2I5QAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0wMi0xM1QwODoxNToyOSswMDowMEUnN7UAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMDItMTNUMDg6MTU6MjkrMDA6MDA0eo8JAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTAyLTEzVDA4OjE1OjI5KzAwOjAwY2+u1gAAAABJRU5ErkJggg==" />
               </svg>
@@ -201,7 +199,7 @@ const User: React.FC<UserCardProps> = ({
             </p>
             
             {/* ID号码 */}
-            <p className="absolute text-xs font-['Courier_New',monospace] bottom-[18px] right-[10px] tracking-[1.4px] text-[#f0f0f0] [text-shadow:0.5px_0.5px_0_#aaaaaa,-0.5px_-0.5px_0_#f0f0f0,-0.5px_0.5px_0_#aaaaaa,0.5px_-0.5px_0_#aaaaaa]">
+            <p className="absolute text-sm font-['Courier_New',monospace] bottom-[16px] right-[10px] tracking-[1.4px] text-[#f0f0f0] [text-shadow:0.5px_0.5px_0_#aaaaaa,-0.5px_-0.5px_0_#f0f0f0,-0.5px_0.5px_0_#aaaaaa,0.5px_-0.5px_0_#aaaaaa]">
               {userData.id}
             </p>
           </div>

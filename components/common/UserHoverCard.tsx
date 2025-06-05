@@ -41,10 +41,10 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
    * 获取头像 URL
    */
   const getAvatarUrl = (size: string = DEFAULT_CONFIG.AVATAR_SIZE): string => {
-    if (error || !userData?.avatar_template) {
+    if (!userData?.avatar_template) {
       return DEFAULT_CONFIG.AVATAR_URL;
     }
-    return userData.avatar_template.replace('/{size}', `/${size}`);
+    return `https://linux.do${userData.avatar_template.replace('/{size}', `/${size}`)}`;
   };
 
   /**
