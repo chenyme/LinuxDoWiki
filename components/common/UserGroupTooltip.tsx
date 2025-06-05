@@ -163,7 +163,7 @@ export const UserGroupTooltip = ({
     if (!userData || !userData.data?.avatar_template || userData.data.avatar_template === '/logo.png') {
       return DEFAULT_CONFIG.AVATAR_URL;
     }
-    return `https://linux.do${userData.data.avatar_template.replace('/{size}', '')}`;
+    return `https://linux.do${userData.data.avatar_template.replace('/{size}', '288')}`;
   };
   
   // 获取用户显示名称
