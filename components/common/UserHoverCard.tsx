@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   HoverCard,
   HoverCardTrigger,
@@ -72,7 +73,11 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
             className="inline-flex items-center justify-center gap-1 cursor-pointer align-middle no-underline hover:no-underline transition-opacity hover:opacity-80"
           >
             <Avatar className="size-5">
-              <AvatarImage src={getAvatarUrl('288')} alt={`${getDisplayName()}的头像`} />
+              <AvatarImage
+                src={getAvatarUrl('288')}
+                alt={`${getDisplayName()}的头像`}
+                loading="lazy"
+              />
               <AvatarFallback>{username.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <span className="align-middle items-center justify-center">@{username}</span>
@@ -83,7 +88,11 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
           <div className="flex flex-col gap-4">
             {/* 用户头像 */}
             <Avatar className="size-16 border">
-              <AvatarImage src={getAvatarUrl('288')} alt={`${getDisplayName()}的头像`} />
+              <AvatarImage
+                src={getAvatarUrl('288')}
+                alt={`${getDisplayName()}的头像`}
+                loading="lazy"
+              />
               <AvatarFallback>{username.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             
