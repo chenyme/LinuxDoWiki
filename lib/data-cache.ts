@@ -42,6 +42,7 @@ export interface TopicData {
   details: {
     created_by: {
       username: string;
+      avatar_template: string;
     };
   };
 }

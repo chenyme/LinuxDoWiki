@@ -16,6 +16,7 @@ interface TopicResponse {
   details: {
     created_by: {
       username: string;
+      avatar_template: string;
     };
   };
 }

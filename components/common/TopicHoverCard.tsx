@@ -160,7 +160,7 @@ export const TopicHoverCard = ({ topicId, defaultTitle }: TopicHoverCardProps) =
           {/* 作者信息 */}
           <div className="flex items-center gap-2 p-2 rounded-md bg-gray-50 dark:bg-gray-900">
             <Avatar className="size-6">
-              <AvatarImage src={`https://linux.do/user_avatar/linux.do/${topicData.details.created_by.username}/96/`} alt={topicData.details.created_by.username} />
+              <AvatarImage src={`https://linux.do${topicData.details.created_by.avatar_template}`} alt={topicData.details.created_by.username} />
               <AvatarFallback className="bg-gradient-to-br from-violet-400 to-purple-500">
                 {topicData.details.created_by.username.charAt(0).toUpperCase()}
               </AvatarFallback>

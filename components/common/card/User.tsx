@@ -66,7 +66,7 @@ const User: React.FC<UserCardProps> = ({
             setUserData({
               name: data.user.name,
               id: data.user.id.toString().padStart(16, '0'),
-              avatar: `https://linux.do${data.user.avatar_template.replace('{size}', '96')}`,
+              avatar: `https://linux.do${data.user.avatar_template.replace('{size}', '288')}`,
               title: '',
               trustLevel: data.user.trust_level,
               createdAt: new Date(data.user.created_at).toISOString().split('T')[0],

@@ -21,7 +21,7 @@ interface UserHoverCardProps {
  */
 const DEFAULT_CONFIG = {
   AVATAR_URL: '/logo.png',
-  AVATAR_SIZE: '96',
+  AVATAR_SIZE: '288',
   PROFILE_BASE_URL: 'https://linux.do/u/',
   DEFAULT_BIO: '这个用户还没有填写个人简介',
 } as const;
@@ -72,7 +72,7 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
             className="inline-flex items-center justify-center gap-1 cursor-pointer align-middle no-underline hover:no-underline transition-opacity hover:opacity-80"
           >
             <Avatar className="size-5">
-              <AvatarImage src={getAvatarUrl('96')} alt={`${getDisplayName()}的头像`} />
+              <AvatarImage src={getAvatarUrl('288')} alt={`${getDisplayName()}的头像`} />
               <AvatarFallback>{username.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <span className="align-middle items-center justify-center">@{username}</span>
