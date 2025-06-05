@@ -21,7 +21,7 @@ export async function GET(
   const { username } = await params;
   
   try {
-    const response = await fetch(`https://linux.do/api/users/${username}.json`);
+    const response = await fetch(`https://linux.do/users/${username}.json`);
     const data: UserResponse = await response.json();
     
     return NextResponse.json(data);
