@@ -35,7 +35,7 @@ const DEFAULT_CONFIG = {
  */
 export const UserHoverCard = ({ username }: UserHoverCardProps) => {
   // 使用优化的数据缓存Hook
-  const { data: userData, loading, error } = useUserData(username);
+  const { data: userData, loading } = useUserData(username);
 
   /**
    * 获取头像 URL

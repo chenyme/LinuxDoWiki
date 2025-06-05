@@ -118,17 +118,13 @@ export const UserGroupTooltip = ({
     try {
       const response = await fetch(`/api/users/${username}`);
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
       const data = await response.json();
       
       setUsersData(prev => ({
         ...prev,
         [username]: { data: data.user, loading: false, error: false }
       }));
-    } catch (error) {
+    } catch {
       // 静默失败，设置默认数据
       setUsersData(prev => ({
         ...prev,

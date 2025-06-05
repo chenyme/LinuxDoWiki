@@ -200,7 +200,7 @@ export const TopicHoverCard = ({ topicId, defaultTitle }: TopicHoverCardProps) =
               { label: '浏览', value: topicData.views, icon: '👁️' },
               { label: '点赞', value: topicData.like_count, icon: '❤️' },
               { label: '参与', value: topicData.participant_count, icon: '👥' }
-            ].map((stat, index) => (
+            ].map((stat) => (
               <div
                 key={stat.label}
                 className="text-center p-2 rounded-md bg-gray-50 dark:bg-gray-900"
