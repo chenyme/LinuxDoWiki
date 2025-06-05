@@ -343,7 +343,7 @@ export default function MemoryCardGame() {
   }, [initializeGame]);
 
   return (
-    <div className="w-full px-8 min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
+    <div className="w-full px-8">
 
       {/* 控制面板 */}
       <div className="grid gap-4 max-w-lg mx-auto">
@@ -358,7 +358,7 @@ export default function MemoryCardGame() {
       </div>
 
       {/* 游戏区域 */}
-      <div className="grid grid-cols-4 gap-4 max-w-lg mx-auto">
+      <div className="grid grid-cols-4 gap-4 max-w-lg mx-auto mb-8">
         {gameState.cards.map((card, index) => (
           <GameCard
             key={card.id}
