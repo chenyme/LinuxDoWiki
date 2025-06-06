@@ -1,0 +1,61 @@
+<br></br>
+
+import Link from 'next/link'
+import { Callout } from 'nextra/components'
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
+
+# 共享镜像 OAIFree
+
+<Callout type='error'>
+    2024年11月27日，OAIFree 宣布关停，详情见
+    <TopicHoverCard topicId='272012' defaultTitle='there is no wall' />
+</Callout>
+
+## 功能介绍
+
+<Link href='https://shared.oaifree.com' target='_blank' className='text-blue-500'>shared.oaifree.com</Link> 是一个共享账号池服务，支持一键登录、自动切换账号等功能。
+
+- 已接入官方内容审核系统，确保使用安全合规
+- 设有内容审核记录统计，每日更新违规用户名单
+- 提供捐赠者荣誉榜及使用量统计展示
+- 支持 LINUX DO 账号登录，需达到 1 级以上
+- 开放 Access Token 投递功能
+- 注意：使用 AdGuard 可能导致页面重定向异常
+
+可前往 <Link href='https://shared.oaifree.com/dashboard' target='_blank' className='text-blue-500'>Dashboard</Link> 查看详细统计数据，也可通过论坛侧栏的外部链接 - Shared Chat 进行访问。
+
+### 如何投递 Access Token
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    Curl: `curl -X PUT 'https://shared.oaifree.com/share/tokens' \\
+    -H 'Content-Type: application/json' \\
+    -d '{
+        "tokens": [
+            "fk-1",
+            "fk-2", 
+            "access token"
+        ]
+    }'`,
+    Python: `import requests
+
+url = 'https://shared.oaifree.com/share/tokens'
+headers = {
+    'Content-Type': 'application/json',
+}
+data = {
+    'tokens': [
+        'fk-1',
+        'fk-2',
+        'access token'
+    ]
+}
+response = requests.put(url, headers=headers, json=data)
+
+print(response.status_code)
+print(response.json())`
+  }}
+/>

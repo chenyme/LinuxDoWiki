@@ -1,0 +1,44 @@
+<br></br>
+import { UserHoverCard } from '@/components/common/UserHoverCard'
+import User from '@/components/common/card/User'
+import MemoryCard from '@/components/pandora/MemoryCard'
+import { Cards } from 'nextra/components'
+import { Gavel } from '@/components/animate-ui/icons/gavel'
+import Image from 'next/image'
+
+
+# Pandora 百宝箱
+> 探索佬友们的一些小玩意儿 ~
+
+## Linux Do 社区卡片 
+> Created By <UserHoverCard username='chenyme'/>
+
+<div className="flex justify-center my-8">
+  <User />
+</div>
+
+## 2048
+> Created By <UserHoverCard username='neo'/>
+
+<br></br>
+
+<Cards.Card
+  icon={<Gavel animate/>}
+  title='lottery.linux.do'
+  href='https://lottery.linux.do'
+  target='_blank'
+  arrow
+/>
+
+<br></br>
+
+<Image src="/2048.png" width={1280} height={1024} alt="2048 Game" />
+
+## 记忆翻牌
+> Created By <UserHoverCard username='chenyme'/>
+
+<div className="flex justify-center my-8">
+  <MemoryCard />
+</div>
+
+

@@ -1,0 +1,81 @@
+<br></br>
+
+import Link from 'next/link'
+import { Cards, Callout } from 'nextra/components'
+import { ThumbsUp } from '@/components/animate-ui/icons/thumbs-up'
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
+
+# Access Token
+
+当你在官网登录 ChatGPT 后，系统会自动发放一个许可令牌，这个令牌就是 Access Token。它是一种会过期的动态令牌，相当于另一种登录方式，但安全性更高，目前 OpenAI 的 Access Token 有效期为10天。
+
+在这期间，你可以使用 Access Token 登录 OAIFree 服务，从而实现免翻使用 ChatGPT 的所有功能。但 Access Token 过期后就会失效，需要重新获取才可继续访问。
+
+- OpenAI 的 Access Token 有效期为10天，过期后需要重新获取
+- 这种机制用于 API 调用或 Web 应用服务中的身份验证和授权，安全性更高
+- 通常是一个加密的字符串，用来表示用户已成功通过身份验证，并获得访问特定资源的权限
+
+## 获取方式
+
+### 官网 F12 手动获取
+
+- 前往 ChatGPT 官网对话页，登录后按 F12，在侧边栏中点击 `应用程序`
+- 依次找到 `存储` - `Cookie` - `https://chatgpt.com`
+- 复制名称为 `__Secure-next-auth.session-token` 的值即为 Access Token（以 `eyjnb...` 开头）
+
+### 使用始皇服务接口获取
+
+点击<Link href='https://token.oaifree.com/auth' target='_blank' className='text-blue-500'>前往服务接口</Link>，接口对应信任等级的额度说明如下：
+- 信任等级为：0，无法使用此服务
+- 信任等级为：1，每天获取 5 次 Access Token，无 Refresh Token
+- 信任等级为：2，每天获取 50 次 Access Token，无 Refresh Token
+- 信任等级为：3，每天获取 50 次 Access Token，有 Refresh Token
+
+输入 OpenAI 账户和密码，点击获取 Access Token。
+
+### 通过 Refresh Token 获取
+
+首先，你需要有 Refresh Token，然后你就可以通过 Refresh Token 来获取你账号的 Access Token。
+
+- 请确保下方的 `YOUR_REFRESH_TOKEN` 替换为你实际的 `Refresh Token`
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    Curl: `curl -X POST "https://token.oaifree.com/api/auth/refresh" \\
+     -d "refresh_token=YOUR_REFRESH_TOKEN"`,
+    Python: `import json
+import requests
+
+response = requests.post(
+    'https://token.oaifree.com/api/auth/refresh',
+    data={'refresh_token': YOUR_REFRESH_TOKEN}
+)
+access_token = response.json().get('access_token')`,
+    Javascript: `const refreshToken = 'YOUR_REFRESH_TOKEN';
+
+fetch('https://token.oaifree.com/api/auth/refresh', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({ refresh_token: YOUR_REFRESH_TOKEN })
+})
+.then(response => response.json())
+.then(data => {
+    const accessToken = data.access_token;
+    console.log(accessToken);
+})
+.catch(error => console.error('Error:', error));`
+  }}
+/>
+
+<br></br>
+
+<Cards.Card
+  icon={<ThumbsUp animate/>}
+  title='如何利用 Access Token 获取 Share Token？'
+  href='/AI/OAIFree/ShareToken#通过-access-token-获取'
+  arrow
+/>

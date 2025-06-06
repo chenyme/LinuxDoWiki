@@ -1,0 +1,149 @@
+<br></br>
+
+import Link from 'next/link'
+import { Cards } from 'nextra/components'
+import { Send } from '@/components/animate-ui/icons/send'
+import { UserHoverCard } from '@/components/common/UserHoverCard'
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+
+
+# Linux Do 社区邮箱
+
+经过多轮测试，LINUX DO Mail 现已正式向社区成员开放！
+
+恳请各位用户共同爱护我们的 LINUX DO Mail！我们希望看到的是大家以拥有 `@linux.do` 邮箱为荣，而不是厌恶或屏蔽这个邮箱后缀。
+
+如果您收到来自 `@linux.do` 的邮件被归类为垃圾邮件，请在确认后将其移出垃圾箱，这对我们很有帮助。如果收到来自 `@linux.do` 的骚扰邮件，请转发至 admin@linux.do，我们将及时处理！
+
+<br></br>
+
+<Cards.Card
+  icon={<Send animate/>}
+  title='webmail.linux.do'
+  href='https://webmail.linux.do'
+  target='_blank'
+  arrow
+/>
+
+## 如何申请
+
+用户可前往 <Link href='https://connect.linux.do/' target='_blank' className='text-blue-500'>LINUX DO Connect</Link> 申请（当前仅限信任等级 3 级以上用户申请，已有 4k+ 成员），审核通过后将收到包含登录信息的站内私信。
+
+**请务必仔细阅读申请页面的注意事项！**
+
+## 常见问题
+
+<details>
+<summary>这个邮箱有什么特别之处吗？</summary>
+提供标准的邮件收发功能，最大的特色在于其独特的域名后缀。
+</details>
+
+<details>
+<summary>获得邮箱后，信任等级降至 2 级会有影响吗？</summary>
+邮箱将保留使用权限，不会受到影响。
+</details>
+
+<details>
+<summary>我是往期邮箱用户，如何恢复？</summary>
+请前往 LINUX DO Connect 输入原邮箱地址进行恢复。系统将显示初始密码，请注意保存。同样需要达到 3 级信任等级，在此之前邮箱地址将为您保留。
+</details>
+
+<details>
+<summary>论坛账号被封禁会影响邮箱使用吗？</summary>
+会受到影响，邮箱账号将同步封禁（短期封禁通常不影响邮箱使用）。请珍惜您的账号！
+</details>
+
+<details>
+<summary>申请后长时间未收到登录信息私信？</summary>
+工作日申请通常在 1 小时内完成审批。如超时未收到，可能是您申请的邮箱地址未通过审核。
+</details>
+
+<details>
+<summary>邮箱地址有问题，能否修改？</summary>
+目前暂不支持修改，需等待申请高峰期结束后统一处理。
+</details>
+
+<details>
+<summary>什么样的邮箱地址容易被拒绝？</summary>
+如果申请的地址容易与 LINUX DO 官方服务、部门或职位混淆，通常不会通过。如果您觉得可能不合适，那很可能确实不合适。
+</details>
+
+<details>
+<summary>为什么不直接使用论坛用户名作为邮箱地址？</summary>
+论坛用户名相对随意，部分不适合作为邮箱地址。此外，一一对应会导致论坛通讯录泄露。同时，部分用户虽有优质用户名但无申请邮箱意向，会造成资源浪费。
+</details>
+
+<details>
+<summary>提示'今日尝试次数已达上限'怎么办？</summary>
+首次申请起 24 小时内最多可提交 20 次申请，超过后需等待重置。
+</details>
+
+<details>
+<summary>无法通过 Cloudflare 人机验证怎么办？</summary>
+建议更换网络环境或浏览器重试。配置好第三方邮件客户端后，访问网页版的需求会大幅减少。
+</details>
+
+<details>
+<summary>能否支持 PWA？</summary>
+作为专业邮箱服务，我们建议使用第三方邮件客户端，可获得更流畅的使用体验和更及时的通知提醒。
+</details>
+
+<details>
+<summary>如何配置第三方邮件客户端？</summary>
+请参考 <Link href='https://webmail.linux.do/admin/client' target='_blank' className='text-blue-500'>客户端设置</Link> 页面。`pop3/smtp/imap` 服务器地址均为 `mail.linux.do`。`macOS/iOS` 用户建议下载配置描述文件进行设置。
+</details>
+
+<details>
+<summary>配置客户端时是否应该直接使用密码？</summary>
+**不建议！** 推荐访问 <Link href='https://webmail.linux.do/admin/token/list' target='_blank' className='text-blue-500'>认证令牌页面</Link> 生成专用令牌。这样既可保护密码安全，又便于管理权限。
+</details>
+
+<details>
+<summary>是否推荐使用简单密码？</summary>
+**强烈不建议！** 这可能导致账号被盗用，若被用于发送垃圾邮件，将造成严重影响。
+</details>
+
+<details>
+<summary>忘记密码怎么办？</summary>
+请私信 <UserHoverCard username='neo' /> 处理。建议妥善保管密码信息。
+</details>
+
+<details>
+<summary>部分地区连接服务器困难？</summary>
+由于特殊原因，某些地区可能需要使用代理。您也可以在主流邮箱（如 QQ 邮箱）中设置代收 LINUX DO Mail，还能配置微信提醒。
+</details>
+
+<details>
+<summary>发往某些邮箱（如 Outlook）被标记为垃圾邮件？</summary>
+这种情况较为普遍，主要与邮件内容相关性更大。
+</details>
+
+<details>
+<summary>为什么有时收信较慢？</summary>
+我们采用了反垃圾邮件系统，包含 `greylisting` 机制。当发件方评分较低时，需要多次尝试发送才会被接收（详见相关技术说明）。
+</details>
+
+<details>
+<summary>每日发信限额是多少？</summary>
+目前为 `50/day`，对于主要接收邮件的用户来说通常足够。我们会根据实际情况动态调整。
+</details>
+
+<details>
+<summary>是否支持邮箱别名？</summary>
+支持 `+` 分隔别名。例如邮箱为 `abc@linux.do`，则 `abc+任意内容@linux.do` 均可收到。
+</details>
+
+<details>
+<summary>可以用于发送垃圾邮件吗？</summary>
+**严格禁止！** 一经发现将直接封禁邮箱。请共同维护 LINUX DO Mail 的声誉。
+</details>
+
+<details>
+<summary>可以用于注册/绑定 LINUX DO 账号吗？</summary>
+目前不可以。早期用户量较少时允许，但现已超过 2k+ 用户，暂无法做好相关风控。
+</details>
+
+<details>
+<summary>想了解更多技术细节？</summary>
+欢迎查看用户撰写的详细评测：<TopicHoverCard topicId='437320' defaultTitle='【测评】LINUX DO Mail 域名邮箱详细分析与测评报告' />
+</details>

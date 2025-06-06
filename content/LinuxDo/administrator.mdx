@@ -1,0 +1,37 @@
+<br></br>
+
+import { UserGroupTooltip } from '@/components/common/UserGroupTooltip'
+
+# 社区管理团队
+
+如遇网站重大问题或紧急事项，请发送邮件至 admin@linux.do 联系我们。
+
+如果您发现任何不当内容，请及时与我们的管理团队沟通反馈。温馨提示：联系前请确保已登录账号。
+
+## 管理员团队
+
+<UserGroupTooltip 
+  users={[
+    { username: 'Neo', title: '站长' }
+  ]}
+  size='lg'
+  title='管理员'
+  className='my-6'
+/>
+
+## 版主团队
+
+<UserGroupTooltip 
+  users={[
+    { username: 'DOS.DO', title: '版主' },
+    { username: 'Musifei', title: '版主' },
+    { username: 'syokatu', title: '版主' },
+    { username: 'king-huiwen-of-qin', title: '版主' },
+    { username: 'kevin', title: '版主' },
+    { username: 'SMNET', title: '版主' }
+  ]}
+  size='md'
+  title='版主团队'
+  className='my-6'
+  maxDisplay={10}
+/>

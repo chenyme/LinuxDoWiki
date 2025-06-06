@@ -1,0 +1,122 @@
+<br></br>
+
+import Link from 'next/link'
+import Image from 'next/image'
+import { Callout } from 'nextra/components'
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
+
+# 新版镜像 OAIFree
+
+<Callout type='error'>
+    2024年11月27日，OAIFree 宣布关停，详情见
+    <TopicHoverCard topicId='272012' defaultTitle='there is no wall' />
+</Callout>
+
+## 功能介绍
+
+这是镜像服务的最新版本 OAIFree，拥有与官网一致的全新界面。令人惊喜的是：**不仅完整保留了官网的所有功能，还增添了更多特色功能！**
+
+- 支持共享令牌，实现用户会话隔离
+- 简洁界面，无冗余系统提示词
+- 完整支持 GPT4o-mini、GPT4o、GPT4 和 GPTs
+- 无需科学上网，输入 Token 即可使用
+- 支持与 ChatGPT 进行语音对话
+- ...
+
+<br></br>
+<Image src='/oaifree.png' width={1206} height={708} alt='oaifree'/>
+
+## 使用方式
+
+### Token 登录
+
+ - 通过始皇的<Link href='https://token.oaifree.com/auth' target='_blank' className='text-blue-500'>Access Token</Link>服务获取 Access Token
+
+ - 使用 Access Token 在始皇的<Link href='https://chat.oaifree.com/token' target='_blank' className='text-blue-500'>Share Token</Link>服务获取 Share Token（**可选**）
+
+ - 访问<Link href='https://new.oaifree.com' target='_blank' className='text-blue-500'>new.oaifree.com</Link>，输入 Access Token 或 Share Token 即可开始使用
+
+### Share Token 拼接
+
+链接格式：https://`<yourdomain>`/auth/login_share?token=`<SHARE_TOKEN>`
+
+ - 将 YOURDOMAIN 替换为你的域名，SHARE_TOKEN 替换为你的 Share Token
+
+### OAuth 获取链接
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    Curl: `curl 'https://YOURDOMAIN/api/auth/oauth_token' \\
+    -H 'Origin: https://YOURDOMAIN' \\
+    -H 'Content-Type: application/json' \\
+    -d '{
+        "share_token": SHARE_TOKEN
+    }'`,
+    Python: `import requests
+
+domain = 'YOURDOMAIN' # 例如：new.oaifree.com
+share_token = 'SHARE_TOKEN' # 通过 Share Token 服务获取
+
+url = f'https://{domain}/api/auth/oauth_token'
+headers = {
+    'Origin': f'https://{domain}',
+    'Content-Type': 'application/json'
+}
+data = {
+    'share_token': share_token
+}
+
+response = requests.post(url, headers=headers, json=data)
+response.json().get('login_url')`,
+    Javascript: `const domain = 'YOURDOMAIN'; // 例如：new.oaifree.com
+const shareToken = 'SHARE_TOKEN'; // 通过 Share Token 服务获取
+
+const url = \`https://\${domain}/api/auth/oauth_token\`;
+const headers = {
+    'Origin': \`https://\${domain}\`,
+    'Content-Type': 'application/json'
+};
+const data = {
+    'share_token': shareToken
+};
+
+fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+    const loginUrl = data.login_url;
+    // 这里可以进一步处理 loginUrl
+})
+.catch(error => {
+    // 处理错误
+});`
+  }}
+/>
+
+## 反代镜像服务
+
+<br></br>
+
+<CodeTabs
+  codes={{
+    'Cloudflare Worker': `export default {
+    async fetch(request, env) {
+    const url = new URL(request.url);
+    url.host = 'new.oaifree.com';
+    return fetch(new Request(url, request))
+  }
+}
+`,
+    'Nginx': `location / {
+    proxy_pass https://new.oaifree.com;
+    proxy_ssl_server_name on;
+}
+`
+  }}
+/>

@@ -1,0 +1,18 @@
+<br></br>
+
+import Link from 'next/link'
+import { Callout } from 'nextra/components'
+import { TopicHoverCard } from '@/components/common/TopicHoverCard'
+
+# 通配子域名 OAIFree
+
+<Callout type='error'>
+    2024年11月27日，OAIFree 宣布关停，详情见
+    <TopicHoverCard topicId='272012' defaultTitle='there is no wall' />
+</Callout>
+
+## 功能介绍
+
+new.oaifree.com 现已支持通配子域名访问登录！这意味着您可以使用如 <Link href='https://linuxdo.new.oaifree.com' target='_blank' style={{ textDecoration: 'none', color: '#3A9FE8' }}>linuxdo.new.oaifree.com</Link>、<Link href='https://oaifree.new.oaifree.com' target='_blank' style={{ textDecoration: 'none', color: '#3A9FE8' }}>oaifree.new.oaifree.com</Link> 等子域名来访问 OAIFree 的镜像服务。
+
+实际上，`*.new.oaifree.com` 中的 `*` 可以是任何符合域名规则的字符。由于不同域名的 Cookie 相互独立，这在一定程度上可以防止服务被阻断。

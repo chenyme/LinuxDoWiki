@@ -1,0 +1,34 @@
+<br></br>
+
+import Link from 'next/link'
+import { Cards } from 'nextra/components'
+import { ThumbsUp } from '@/components/animate-ui/icons/thumbs-up'
+
+# Refresh Token
+
+Refresh Token 是一个用于生成新的 Access Token 的令牌，它是 OpenAI 为 iOS 端用户登录设计的产物。只要用户不主动修改密码，其**有效期可长达 3 个月左右**。当您获得 Refresh Token 后，可以通过编写相关函数来获取账号的 Access Token，从而实现自动刷新 Token 的功能，无需手动操作。
+
+需要注意的是，OpenAI 已对 iOS 登录实施了限制。当同一设备登录账号过多时，该设备将被永久禁止使用 ChatGPT APP，请谨慎操作。
+
+## 获取方式
+
+### 服务接口
+
+点击<Link href='https://token.oaifree.com/auth' target='_blank' className='text-blue-500'>前往服务接口</Link>，各信任等级对应的额度说明如下：
+- 信任等级 0：无法使用此服务
+- 信任等级 1：每天可获取 5 次 Access Token，无 Refresh Token
+- 信任等级 2：每天可获取 50 次 Access Token，无 Refresh Token
+- 信任等级 3：每天可获取 50 次 Access Token，可使用 Refresh Token
+
+### iOS 设备手动获取
+不建议使用此方法，如无相关技术基础请勿尝试。
+- 出于安全考虑，本 Wiki 不提供相关教程。
+
+<br></br>
+
+<Cards.Card
+  icon={<ThumbsUp animate/>}
+  title='如何利用 Refresh Token 获取 Access Token？'
+  href='/AI/OAIFree/AccessToken#通过-refresh-token-获取'
+  arrow
+/>
