@@ -4,7 +4,7 @@
   
 
 
-<img height="70" src="/public/linuxdo_logo_with_dark_text.png">
+<img height="70" src="/public/linuxdo_dark.png">
 
 ## Linux Do Wiki | [ wiki.linux.do](wiki.linux.do)
 
