@@ -11,6 +11,7 @@ interface UserResponse {
     trust_level: number;
     created_at: string;
     gamification_score?: number;
+    title?: string;
   };
 }
 

@@ -30,7 +30,8 @@ export async function GET(request: NextRequest) {
     
     // 获取重定向URL，默认为/tools
     const redirectTo = searchParams.get('redirect') || '/tools';
-    return NextResponse.redirect(new URL(redirectTo, request.url));
+    const logoutBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+    return NextResponse.redirect(new URL(redirectTo, logoutBaseUrl));
   }
   
   // 生成状态值并存储在cookie中

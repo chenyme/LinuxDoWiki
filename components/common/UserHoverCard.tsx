@@ -62,15 +62,14 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
   };
 
   return (
-    <span className="inline-flex items-center justify-center align-middle">
-      <HoverCard>
-        <HoverCardTrigger asChild>
-          <Link
-            href={`${DEFAULT_CONFIG.PROFILE_BASE_URL}${username}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-1 cursor-pointer align-middle no-underline hover:no-underline transition-opacity hover:opacity-80"
-          >
+    <HoverCard>
+      <HoverCardTrigger asChild>
+        <Link
+          href={`${DEFAULT_CONFIG.PROFILE_BASE_URL}${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-1 cursor-pointer align-middle no-underline hover:no-underline transition-opacity hover:opacity-80"
+        >
             <Avatar className="size-5">
               <AvatarImage
                 src={getAvatarUrl('288')}
@@ -131,6 +130,5 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
           </div>
         </HoverCardContent>
       </HoverCard>
-    </span>
-  );
+    );
 }; 

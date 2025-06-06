@@ -20,14 +20,16 @@ export async function GET(request: NextRequest) {
     const storedState = cookieStore.get('oauth_state')?.value;
     
     if (!storedState || state !== storedState) {
-      return NextResponse.redirect(new URL('/tools?error=invalid_state', request.url));
+      const errorBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+      return NextResponse.redirect(new URL('/tools?error=invalid_state', errorBaseUrl));
     }
     
     // 清除状态cookie
     cookieStore.set('oauth_state', '', { expires: new Date(0) });
     
     if (!code) {
-      return NextResponse.redirect(new URL('/tools?error=no_code', request.url));
+      const errorBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+      return NextResponse.redirect(new URL('/tools?error=no_code', errorBaseUrl));
     }
     
     // 交换授权码获取访问令牌
@@ -50,7 +52,8 @@ export async function GET(request: NextRequest) {
     
     if (!tokenResponse.ok) {
       console.error('Token exchange failed:', await tokenResponse.text());
-      return NextResponse.redirect(new URL('/tools?error=token_exchange_failed', request.url));
+      const errorBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+      return NextResponse.redirect(new URL('/tools?error=token_exchange_failed', errorBaseUrl));
     }
     
     const tokenData = await tokenResponse.json();
@@ -65,7 +68,8 @@ export async function GET(request: NextRequest) {
     
     if (!userInfoResponse.ok) {
       console.error('User info fetch failed:', await userInfoResponse.text());
-      return NextResponse.redirect(new URL('/tools?error=user_info_failed', request.url));
+      const errorBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+      return NextResponse.redirect(new URL('/tools?error=user_info_failed', errorBaseUrl));
     }
     
     const userData = await userInfoResponse.json();
@@ -100,10 +104,12 @@ export async function GET(request: NextRequest) {
     cookieStore.set('redirect_after_login', '', { expires: new Date(0) });
     
     // 重定向到原始页面
-    return NextResponse.redirect(new URL(redirectAfterLogin, request.url));
+    const redirectBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+    return NextResponse.redirect(new URL(redirectAfterLogin, redirectBaseUrl));
     
   } catch (error) {
     console.error('OAuth callback error:', error);
-    return NextResponse.redirect(new URL('/tools?error=server_error', request.url));
+    const errorBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+    return NextResponse.redirect(new URL('/tools?error=server_error', errorBaseUrl));
   }
 } 

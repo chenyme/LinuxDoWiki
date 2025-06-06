@@ -69,12 +69,14 @@ const NavbarOAuthButton: React.FC<NavbarOAuthButtonProps> = ({
 
   // 处理登录点击
   const handleLogin = () => {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
+    
     if (isLoggedIn) {
       // 如果已登录，则登出
-      window.location.href = `/api/oauth2?action=logout&redirect=${encodeURIComponent(window.location.pathname)}`;
+      window.location.href = `${baseUrl}/api/oauth2?action=logout&redirect=${encodeURIComponent(window.location.pathname)}`;
     } else {
       // 如果未登录，则重定向到OAuth授权
-      window.location.href = `/api/oauth2?redirect=${encodeURIComponent(window.location.pathname)}`;
+      window.location.href = `${baseUrl}/api/oauth2?redirect=${encodeURIComponent(window.location.pathname)}`;
     }
   };
 

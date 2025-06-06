@@ -67,7 +67,7 @@ const User: React.FC<UserCardProps> = ({
               name: data.user.name,
               id: data.user.id.toString().padStart(16, '0'),
               avatar: `https://linux.do${data.user.avatar_template.replace('{size}', '288')}`,
-              title: '',
+              title: data.user.title || '',
               trustLevel: data.user.trust_level,
               createdAt: new Date(data.user.created_at).toISOString().split('T')[0],
               score: data.user.gamification_score || 0
@@ -163,7 +163,7 @@ const User: React.FC<UserCardProps> = ({
             
             {/* 头像 */}
             <div className="absolute top-[32px] left-[30px] w-[50px] h-[50px] rounded-full bg-[rgba(255,255,255,0.3)] shadow-[0_4px_8px_rgba(0,0,0,0.5),0_2px_4px_rgba(0,0,0,0.1)_inset] overflow-hidden">
-              <Avatar>
+              <Avatar className="w-full h-full">
                 <AvatarImage src={userData.avatar} alt={userData.name} />
                 <AvatarFallback>{userData.name?.slice(0, 2).toUpperCase() || 'LD'}</AvatarFallback>
               </Avatar>
