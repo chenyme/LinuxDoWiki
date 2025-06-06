@@ -157,13 +157,13 @@ export const UserGroupTooltip = ({
     fetchAllUsersData();
   }, [fetchAllUsersData]);
   
-  // 获取用户头像URL
-  const getAvatarUrl = (username: string): string => {
+  // 获取用户头像URL  
+  const getAvatarUrl = (username: string, size: string = '288'): string => {
     const userData = usersData[username];
-    if (!userData || !userData.data?.avatar_template || userData.data.avatar_template === '/logo.png') {
+    if (!userData?.data?.avatar_template) {
       return DEFAULT_CONFIG.AVATAR_URL;
     }
-    return `https://linux.do${userData.data.avatar_template.replace('/{size}', '288')}`;
+    return `https://linux.do${userData.data.avatar_template.replace('{size}', size)}`;
   };
   
   // 获取用户显示名称
@@ -201,7 +201,7 @@ export const UserGroupTooltip = ({
               >
                 <div className={`${avatarSizeClass} border-3 border-background cursor-pointer relative flex shrink-0 overflow-hidden`}>
                   <Avatar className="h-full w-full">
-                    <AvatarImage src={getAvatarUrl(user.username)} alt={getDisplayName(user.username)} />
+                    <AvatarImage src={getAvatarUrl(user.username, '120')} alt={getDisplayName(user.username)} />
                     <AvatarFallback className={`bg-gradient-to-br ${getRandomGradient(user.username)}`}>
                       {user.username.substring(0, 2).toUpperCase()}
                     </AvatarFallback>
@@ -215,7 +215,7 @@ export const UserGroupTooltip = ({
                 {/* 用户头像 */}
                 <div className="flex items-center gap-4">
                   <Avatar className="size-16 border">
-                    <AvatarImage src={getAvatarUrl(user.username)} alt={getDisplayName(user.username)} />
+                    <AvatarImage src={getAvatarUrl(user.username, '288')} alt={getDisplayName(user.username)} />
                     <AvatarFallback className={`bg-gradient-to-br ${getRandomGradient(user.username)}`}>
                       {user.username.substring(0, 2).toUpperCase()}
                     </AvatarFallback>

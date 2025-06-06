@@ -53,7 +53,8 @@ export async function GET(request: NextRequest) {
   });
   
   // 构建授权URL
-  const redirectUri = `${request.nextUrl.origin}/api/oauth2/callback`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+  const redirectUri = `${baseUrl}/api/oauth2/callback`;
   const authUrl = new URL(OAUTH2_CONFIG.authorizeEndpoint);
   authUrl.searchParams.append('response_type', 'code');
   authUrl.searchParams.append('client_id', OAUTH2_CONFIG.clientId);
@@ -76,7 +77,8 @@ export async function POST(request: NextRequest) {
     }
     
     // 交换授权码获取访问令牌
-    const redirectUri = `${request.nextUrl.origin}/api/oauth2/callback`;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || request.nextUrl.origin;
+    const redirectUri = `${baseUrl}/api/oauth2/callback`;
     const tokenResponse = await fetch(OAUTH2_CONFIG.tokenEndpoint, {
       method: 'POST',
       headers: {
@@ -130,6 +132,7 @@ export async function POST(request: NextRequest) {
     cookieStore.set('oauth_user', JSON.stringify({
       id: userData.id,
       name: userData.name || userData.username,
+      username: userData.username,
       avatar: userData.avatar_url || userData.avatar
     }), {
       httpOnly: false,

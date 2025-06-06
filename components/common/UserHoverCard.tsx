@@ -44,7 +44,7 @@ export const UserHoverCard = ({ username }: UserHoverCardProps) => {
     if (!userData?.avatar_template) {
       return DEFAULT_CONFIG.AVATAR_URL;
     }
-    return `https://linux.do${userData.avatar_template.replace('/{size}', `/${size}`)}`;
+    return `https://linux.do${userData.avatar_template.replace('{size}', size)}`;
   };
 
   /**

@@ -56,8 +56,8 @@ const User: React.FC<UserCardProps> = ({
           const userInfo = JSON.parse(decodedCookie);
           
           // 使用username获取完整用户数据
-          if (userInfo.name) {
-            const response = await fetch(`/api/users/${userInfo.name}`);
+          if (userInfo.username) {
+            const response = await fetch(`/api/users/${userInfo.username}`);
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
