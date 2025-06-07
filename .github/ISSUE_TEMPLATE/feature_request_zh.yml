@@ -11,18 +11,6 @@ body:
         - label: 我已在标题简短的描述了我所需的功能
         - label: 我已在 [Issue Tracker](./?q=is%3Aissue) 中寻找过，但未找到我所需的功能
         - label: 我未在当前版本找到我所需的功能
-
-  - type: dropdown
-    attributes:
-      label: 操作系统
-      description: 请提供操作系统类型
-      multiple: true
-      options:
-        - MacOS
-        - Windows
-        - Linux
-    validations:
-      required: true
   - type: textarea
     attributes:
       label: 描述
