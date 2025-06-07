@@ -50,3 +50,9 @@ body:
       description: 请提供重现错误的步骤
     validations:
       required: true
+  - type: textarea
+    attributes:
+      label: 社区个人主页
+      description: 请提供社区个人主页
+    validations:
+      required: true
