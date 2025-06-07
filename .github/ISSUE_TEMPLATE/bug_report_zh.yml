@@ -1,6 +1,6 @@
 name: 错误反馈
 description: '提交 LINUX DO WIKI 漏洞'
-title: '[Bug] '
+title: '[错误] '
 body:
   - type: checkboxes
     id: ensure
@@ -22,6 +22,16 @@ body:
         - Linux
     validations:
       required: true
+  - type: dropdown
+    attributes:
+      label: 浏览器版本
+      description: 请提供使用的浏览器版本
+      multiple: true
+      options:
+        - Edge
+        - Chorme
+        - Firefox
+        - 手机系统默认浏览器
   - type: input
     attributes:
       label: 系统及浏览器版本
