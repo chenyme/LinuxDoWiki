@@ -1,6 +1,7 @@
 name: 错误反馈
 description: '提交 LINUX DO WIKI 漏洞'
 title: '[错误] '
+labels: ["【错误】"]
 body:
   - type: checkboxes
     id: ensure

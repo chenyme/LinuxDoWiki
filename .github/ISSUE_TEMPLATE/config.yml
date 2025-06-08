@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: LINUX DO WIKI本站
+    url: https://wiki.linux.do
+    about: 在 上报错误/请求功能 前，您可以进一步确认是否存在这一 错误/功能
