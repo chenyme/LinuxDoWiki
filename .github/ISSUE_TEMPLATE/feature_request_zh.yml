@@ -1,6 +1,7 @@
 name: 功能请求
 description: '请求 LINUX DO WIKI 功能'
 title: '[建议] '
+labels: ["【建议】"]
 body:
   - type: checkboxes
     id: ensure
