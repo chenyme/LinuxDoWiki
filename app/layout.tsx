@@ -93,7 +93,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           navbar={navbar}
           pageMap={await getPageMap()}
           search={search}
-          docsRepositoryBase="https://github.com/Chenyme/linux-do-wiki"
+          docsRepositoryBase="https://github.com/chenyme/LinuxDoWiki/edit/main"
           footer={footer}
           darkMode={true}
           editLink="编辑此页面"
