@@ -30,7 +30,7 @@
 <!-- LINK GROUP -->
 
 [github-contrib-shield]: https://contrib.rocks/image?repo=Chenyme/Linux-Do-Wiki
-[github-contrib-link]: https://github.com/Chenyme/Linux-Do-Wiki/graphs/contributors
+[github-contrib-link]: https://github.com/chenyme/LinuxDoWiki/graphs/contributors
 
 
 ### 反馈格式和说明
