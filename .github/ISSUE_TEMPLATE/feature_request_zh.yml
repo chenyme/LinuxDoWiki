@@ -6,7 +6,7 @@ body:
     id: ensure
     attributes:
       label: Verify steps
-      description: 在提交之前，请勾选以下所有选项以证明您已经阅读并理解了以下要求，否则该 issue 将被关闭。
+      description: 为避免重复提交，在提交之前，请勾选以下所有选项以证明您已经阅读并理解了以下要求，否则该 issue 将被关闭。
       options:
         - label: 我已在标题简短的描述了我所需的功能
         - label: 我已在 [Issue Tracker](./?q=is%3Aissue) 中寻找过，但未找到我所需的功能

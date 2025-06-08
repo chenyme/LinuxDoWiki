@@ -5,5 +5,4 @@ export default {
     Che: "拼车/上车/来车",
     Gao7Nian3: "搞七捻三",
     Lao: "佬站/佬友/热佬",
-    
 }
