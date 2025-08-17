@@ -269,17 +269,17 @@ if __name__ == '__main__':
     else:
         print("\n获取访问令牌失败")`,
 
-    PHP: `// 使用 OAuth2 获取 Linux Do 用户信息
+    PHP: `// 通过 OAuth2 获取 Linux Do 用户信息的参考流程
 
 // 配置信息
-$CLIENT_ID = '你的Client ID';
-$CLIENT_SECRET = '你的Client Secret';
+$CLIENT_ID = '你的 Client ID';
+$CLIENT_SECRET = '你的 Client Secret';
 $REDIRECT_URI = '你的回调地址';
 $AUTH_URL = 'https://connect.linux.do/oauth2/authorize';
 $TOKEN_URL = 'https://connect.linux.do/oauth2/token';
-$USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo';
+$USER_INFO_URL = 'https://connect.linux.do/api/user';
 
-// 生成授权链接
+// 生成授权 URL
 function getAuthUrl($clientId, $redirectUri) {
     global $AUTH_URL;
     return $AUTH_URL . '?' . http_build_query([
@@ -290,7 +290,7 @@ function getAuthUrl($clientId, $redirectUri) {
     ]);
 }
 
-// 使用授权码获取用户信息 (合并获取令牌和用户信息步骤)
+// 使用 code 参数获取用户信息（合并获取令牌和获取用户信息的步骤）
 function getUserInfoWithCode($code, $clientId, $clientSecret, $redirectUri) {
     global $TOKEN_URL, $USER_INFO_URL;
 
@@ -305,6 +305,10 @@ function getUserInfoWithCode($code, $clientId, $clientSecret, $redirectUri) {
         'redirect_uri' => $redirectUri,
         'grant_type' => 'authorization_code'
     ]));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/x-www-form-urlencoded',
+        'Accept: application/json'
+    ]);
 
     $tokenResponse = curl_exec($ch);
     curl_close($ch);
@@ -327,8 +331,8 @@ function getUserInfoWithCode($code, $clientId, $clientSecret, $redirectUri) {
     return json_decode($userResponse, true);
 }
 
-// 使用示例
-// 1. 生成授权链接
+// 主流程
+// 1. 生成授权 URL
 $authUrl = getAuthUrl($CLIENT_ID, $REDIRECT_URI);
 echo "<a href='$authUrl'>使用 Linux Do 登录</a>";
 
