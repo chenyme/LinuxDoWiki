@@ -39,104 +39,116 @@ Share Token 起源于始皇的旧版镜像 Pandora，它的作用是映射一个
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Curl",
-      lang: "bash",
-      code: `curl -X POST "https://chat.oaifree.com/token/register" \\
-     -H "Content-Type: application/x-www-form-urlencoded" \\
-     -d "access_token=ACCESS_TOKEN" \\
-     -d "unique_name=UNIQUE_NAME" \\
-     -d "expire_in=0" \\
-     -d "show_userinfo=false" \\
-     -d "gpt35_limit=-1" \\
-     -d "gpt4_limit=-1" \\
-     -d "reset_limit=false" \\
-     -d "show_conversations=true" \\
-     -d "site_limit=" \\
-     -d "temporary_chat=true"`
-    },
-    {
-      name: "Python",
-      lang: "python",
-      code: `import json
-import requests
-
-data = {
-    'access_token': ACCESS_TOKEN,  # 用户的访问令牌
-    'unique_name': UNIQUE_NAME,  # 独一无二的共享令牌名称
-    'expire_in': 0,  # 共享令牌的过期秒数，为0取Access Token过期时间，负数吊销分享令牌
-    'show_userinfo': False,  # 是否显示用户信息，true为显示，false为不显示
-    'gpt35_limit': -1,  # GPT-3.5模型的使用限制，为-1表示不限制
-    'gpt4_limit': -1,  # GPT-4模型的使用限制，为-1表示不限制
-    'reset_limit': False,  # 是否重置使用限制
-    'show_conversations': True,  # 是否显示对话记录，true为显示，false为不显示
-    'site_limit': '',  # 站点使用限制，为空表示不限制
-    'temporary_chat': True  # 是否开启临时聊天功能
-}
-
-response = requests.post('https://chat.oaifree.com/token/register', headers={'Content-Type': 'application/x-www-form-urlencoded'}, data=data)
-token_key = response.json().get('token_key')`
-    },
-    {
-      name: "Javascript",
-      lang: "javascript",
-      code: `const data = {
-    access_token: 'ACCESS_TOKEN',  // 用户的访问令牌
-    unique_name: 'UNIQUE_NAME',  // 独一无二的共享令牌名称
-    expire_in: 0,  // 共享令牌的过期秒数，为0取Access Token过期时间，负数吊销分享令牌
-    show_userinfo: false,  // 是否显示用户信息，true为显示，false为不显示
-    gpt35_limit: -1,  // GPT-3.5模型的使用限制，为-1表示不限制
-    gpt4_limit: -1,  // GPT-4模型的使用限制，为-1表示不限制
-    reset_limit: false,  // 是否重置使用限制
-    show_conversations: true,  // 是否显示对话记录，true为显示，false为不显示
-    site_limit: '',  // 站点使用限制，为空表示不限制
-    temporary_chat: true  // 是否开启临时聊天功能
-};
-
-fetch('https://chat.oaifree.com/token/register', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: new URLSearchParams(data)
-})
-.then(response => response.json())
-.then(data => {
-    const token_key = data.token_key;
-    console.log(token_key);
-})
-.catch(error => console.error('Error:', error));`
-    }
-  ]}
-/>
+<CodeTabsBlocks.Token />
 
 - 返回字段
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "json",
-      lang: "json",
-      code: `
-{
-    'access_token': （字符串）共享令牌的访问令牌,
-    'expire_at': （整型）共享令牌的过期时间，以Unix时间戳表示,
-    'gpt35_limit': （整型）GPT-3.5模型的使用限制,为-1不限制,
-    'gpt4_limit': （整型）GPT-4模型的使用限制,为-1不限制,
-    'reset_limit': （布尔值）是否重置使用限制,
-    'show_conversations': （布尔值）是否显示对话记录 true为显示，false为不显示,
-    'site_limit': （字符串）站点使用限制，为空字符串表示不限制,
-    'temporary_chat': （布尔值）是否开启临时聊天功能,
-    'token_key': （字符串）共享令牌的密钥,
-    'unique_name': （字符串）共享令牌的唯一名称,
-    'user_email': （字符串）该账号的电子邮件地址,
-    'user_id': （字符串）用户的唯一标识符
+<CodeTabsBlocks.Response />
+
+export const CodeTabsBlocks = {
+  Token: () => (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Curl',
+          lang: 'bash',
+          code: `curl -X POST "https://chat.oaifree.com/token/register" \\
+  -H "Content-Type: application/x-www-form-urlencoded" \\
+  -d "access_token=ACCESS_TOKEN" \\
+  -d "unique_name=UNIQUE_NAME" \\
+  -d "expire_in=0" \\
+  -d "show_userinfo=false" \\
+  -d "gpt35_limit=-1" \\
+  -d "gpt4_limit=-1" \\
+  -d "reset_limit=false" \\
+  -d "show_conversations=true" \\
+  -d "site_limit=" \\
+  -d "temporary_chat=true"`
+        },
+        {
+          name: 'Python',
+          lang: 'python',
+          code: `import json
+import requests
+
+data = {
+    "access_token": ACCESS_TOKEN,  # 用户的访问令牌
+    "unique_name": UNIQUE_NAME,  # 独一无二的共享令牌名称
+    "expire_in": 0,  # 共享令牌的过期秒数，为0取Access Token过期时间，负数吊销分享令牌
+    "show_userinfo": False,  # 是否显示用户信息，true为显示，false为不显示
+    "gpt35_limit": -1,  # GPT-3.5模型的使用限制，为-1表示不限制
+    "gpt4_limit": -1,  # GPT-4模型的使用限制，为-1表示不限制
+    "reset_limit": False,  # 是否重置使用限制
+    "show_conversations": True,  # 是否显示对话记录，true为显示，false为不显示
+    "site_limit": "",  # 站点使用限制，为空表示不限制
+    "temporary_chat": True,  # 是否开启临时聊天功能
 }
+
+response = requests.post(
+    "https://chat.oaifree.com/token/register",
+    headers={"Content-Type": "application/x-www-form-urlencoded"},
+    data=data,
+)
+token_key = response.json().get("token_key")`
+        },
+        {
+          name: 'JavaScript',
+          lang: 'javascript',
+          code: `const data = {
+  access_token: 'ACCESS_TOKEN', // 用户的访问令牌
+  unique_name: 'UNIQUE_NAME', // 独一无二的共享令牌名称
+  expire_in: 0, // 共享令牌的过期秒数，为0取Access Token过期时间，负数吊销分享令牌
+  show_userinfo: false, // 是否显示用户信息，true为显示，false为不显示
+  gpt35_limit: -1, // GPT-3.5模型的使用限制，为-1表示不限制
+  gpt4_limit: -1, // GPT-4模型的使用限制，为-1表示不限制
+  reset_limit: false, // 是否重置使用限制
+  show_conversations: true, // 是否显示对话记录，true为显示，false为不显示
+  site_limit: '', // 站点使用限制，为空表示不限制
+  temporary_chat: true // 是否开启临时聊天功能
+};
+
+fetch('https://chat.oaifree.com/token/register', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: new URLSearchParams(data)
+})
+  .then((response) => response.json())
+  .then((data) => {
+    const token_key = data.token_key;
+    console.log(token_key);
+  })
+  .catch((error) => console.error('Error:', error));
 `
-    }
-  ]}
-/>
+        }
+      ]}
+    />
+  ),
+  Response: () => (
+    <CodeTabs
+      codes={[
+        {
+          name: 'JSON',
+          lang: 'json',
+          code: `{
+  "access_token": （字符串）共享令牌的访问令牌,
+  "expire_at": （整型）共享令牌的过期时间，以Unix时间戳表示,
+  "gpt35_limit": （整型）GPT-3.5模型的使用限制,为-1不限制,
+  "gpt4_limit": （整型）GPT-4模型的使用限制,为-1不限制,
+  "reset_limit": （布尔值）是否重置使用限制,
+  "show_conversations": （布尔值）是否显示对话记录 true为显示，false为不显示,
+  "site_limit": （字符串）站点使用限制，为空字符串表示不限制,
+  "temporary_chat": （布尔值）是否开启临时聊天功能,
+  "token_key": （字符串）共享令牌的密钥,
+  "unique_name": （字符串）共享令牌的唯一名称,
+  "user_email": （字符串）该账号的电子邮件地址,
+  "user_id": （字符串）用户的唯一标识符
+}`
+        }
+      ]}
+    />
+  )
+};

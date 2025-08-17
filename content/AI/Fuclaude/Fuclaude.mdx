@@ -43,70 +43,7 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Curl",
-      lang: "bash",
-      code: `curl 'http://YOURDOMAIN/manage-api/auth/oauth_token' \\
-    -H 'Content-Type: application/json' \\
-    -d '{
-        "session_key": SESSION_KEY,
-        "unique_name": UNIQUE_NAME
-    }'`
-    },
-    {
-      name: "Python",
-      lang: "python",
-      code: `import requests
-
-domain = 'YOURDOMAIN'  # 替换为你的域名
-session_key = 'SESSION_KEY'  # 替换为你的 Session Token
-unique_name = 'UNIQUE_NAME'  # 替换为你的独一无二的名称
-
-response = requests.post(
-    url=f"http://{domain}/manage-api/auth/oauth_token",
-    headers={'Content-Type': 'application/json'},
-    json={
-        'session_key': session_key,
-        'unique_name': unique_name
-    })
-
-login_url = response.json().get('login_url')`
-    },
-    {
-      name: "Javascript",
-      lang: "javascript",
-      code: `const domain = 'YOURDOMAIN';  // 替换为你的域名
-const sessionKey = 'SESSION_KEY';  // 替换为你的 Session Token
-const uniqueName = 'UNIQUE_NAME';  // 替换为你的独一无二的名称
-
-const url = \`http://\${domain}/manage-api/auth/oauth_token\`;
-
-const data = {
-    session_key: sessionKey,
-    unique_name: uniqueName
-};
-
-fetch(url, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-})
-.then(response => response.json())
-.then(data => {
-    const loginUrl = data.login_url;
-    // 你可以在这里处理 loginUrl
-    console.log(loginUrl);
-})
-.catch(error => {
-    console.error('Error:', error);
-});`
-    }
-  ]}
-/>
+<CodeTabsBlocks.OAuth />
 
 ## 部署使用
 
@@ -120,31 +57,102 @@ fetch(url, {
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Docker-compose",
-      lang: "yaml",
-      code: `version: '3'
+<CodeTabsBlocks.Compose />
+
+export const CodeTabsBlocks = {
+  OAuth: () => (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Curl',
+          lang: 'bash',
+          code: `curl 'http://YOURDOMAIN/manage-api/auth/oauth_token' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "session_key": SESSION_KEY,
+    "unique_name": UNIQUE_NAME
+  }'`
+        },
+        {
+          name: 'Python',
+          lang: 'python',
+          code: `import requests
+
+domain = "YOURDOMAIN"  # 替换为你的域名
+session_key = "SESSION_KEY"  # 替换为你的 Session Token
+unique_name = "UNIQUE_NAME"  # 替换为你的独一无二的名称
+
+response = requests.post(
+    url=f"http://{domain}/manage-api/auth/oauth_token",
+    headers={"Content-Type": "application/json"},
+    json={"session_key": session_key, "unique_name": unique_name},
+)
+
+login_url = response.json().get("login_url")`
+        },
+        {
+          name: 'JavaScript',
+          lang: 'javascript',
+          code: `const domain = 'YOURDOMAIN'; // 替换为你的域名
+const sessionKey = 'SESSION_KEY'; // 替换为你的 Session Token
+const uniqueName = 'UNIQUE_NAME'; // 替换为你的独一无二的名称
+
+const url = \`http://\${domain}/manage-api/auth/oauth_token\`;
+
+const data = {
+  session_key: sessionKey,
+  unique_name: uniqueName
+};
+
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+})
+  .then((response) => response.json())
+  .then((data) => {
+    const loginUrl = data.login_url;
+    // 你可以在这里处理 loginUrl
+    console.log(loginUrl);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+`
+        }
+      ]}
+    />
+  ),
+  Compose: () => (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Docker-compose',
+          lang: 'yaml',
+          code: `version: '3'
 services:
   fuclaude:
-    image: pengzhile/fuclaude
-    ports:
-      - '127.0.0.1:8181:8181'
-    environment:
-      - TZ=Asia/Shanghai  # 时区（不需要改动）
-      - FUCLAUDE_BIND=0.0.0.0:8181  # 绑定的端口号（不需要改动）（改动需要把映射也一起改动）
-      - FUCLAUDE_TIMEOUT=600  # 超时时间（不需要改动）
-      - FUCLAUDE_PROXY_URL=  # 代理URL socks5://username:password@ip:port（http也一样格式）
-      - FUCLAUDE_REAL_LOGOUT=false  # 是否执行真实的登出操作（true/false）（不需要改动）
-      - FUCLAUDE_SITE_PASSWORD=  # 访问站点的密码（如果需要）
-      - FUCLAUDE_COOKIE_SECRET=1234567890abcdefghijklmnopqrstuv  # Cookie加密的密钥（不需要改动）
-      - FUCLAUDE_OPENAI_BASE_URL=https://api.openai.com/v1  # 内容审核，使用OAI的基础URL
-      - FUCLAUDE_OPENAI_API_KEY=sk-xxx  # 内容审核，使用OAI的密钥
-      - FUCLAUDE_MODERATION_ENABLED=false  # 启用或禁用内容审核（true/false）
-      - FUCLAUDE_SIGNUP_ENABLED=false  # 启用或禁用用户注册（true/false）
-      - FUCLAUDE_SHOW_SESSION_KEY=false  # 显示或隐藏会话密钥（true/false）
-    restart: unless-stopped`
-    }
-  ]}
-/>
+  image: pengzhile/fuclaude
+  ports:
+    - '127.0.0.1:8181:8181'
+  environment:
+    - TZ=Asia/Shanghai  # 时区（不需要改动）
+    - FUCLAUDE_BIND=0.0.0.0:8181  # 绑定的端口号（不需要改动）（改动需要把映射也一起改动）
+    - FUCLAUDE_TIMEOUT=600  # 超时时间（不需要改动）
+    - FUCLAUDE_PROXY_URL=  # 代理URL socks5://username:password@ip:port（http也一样格式）
+    - FUCLAUDE_REAL_LOGOUT=false  # 是否执行真实的登出操作（true/false）（不需要改动）
+    - FUCLAUDE_SITE_PASSWORD=  # 访问站点的密码（如果需要）
+    - FUCLAUDE_COOKIE_SECRET=1234567890abcdefghijklmnopqrstuv  # Cookie加密的密钥（不需要改动）
+    - FUCLAUDE_OPENAI_BASE_URL=https://api.openai.com/v1  # 内容审核，使用OAI的基础URL
+    - FUCLAUDE_OPENAI_API_KEY=sk-xxx  # 内容审核，使用OAI的密钥
+    - FUCLAUDE_MODERATION_ENABLED=false  # 启用或禁用内容审核（true/false）
+    - FUCLAUDE_SIGNUP_ENABLED=false  # 启用或禁用用户注册（true/false）
+    - FUCLAUDE_SHOW_SESSION_KEY=false  # 显示或隐藏会话密钥（true/false）
+  restart: unless-stopped`
+        }
+      ]}
+    />
+  )
+};

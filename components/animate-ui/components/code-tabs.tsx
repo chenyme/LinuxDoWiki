@@ -23,6 +23,11 @@ type CodeTabsProps = {
   onCopy?: (content: string) => void;
 } & Omit<TabsProps, 'children'>;
 
+/**
+ * Note: 在 MDX 文档中使用该组件时需要包裹一层 Wrapper，从内部传入 Props，以确保正确渲染代码块中的缩进。
+ *
+ * Refs: #99
+ */
 function CodeTabs({
   codes,
   themes = {

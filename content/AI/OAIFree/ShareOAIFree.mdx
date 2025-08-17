@@ -29,41 +29,41 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Curl",
-      lang: "bash",
-      code: `curl -X PUT 'https://shared.oaifree.com/share/tokens' \\
-    -H 'Content-Type: application/json' \\
-    -d '{
-        "tokens": [
-            "fk-1",
-            "fk-2",
-            "access token"
-        ]
-    }'`
-    },
-    {
-      name: "Python",
-      lang: "python",
-      code: `import requests
+<CodeTabsBlock />
 
-url = 'https://shared.oaifree.com/share/tokens'
-headers = {
-    'Content-Type': 'application/json',
-}
-data = {
-    'tokens': [
-        'fk-1',
-        'fk-2',
-        'access token'
+export function CodeTabsBlock() {
+  return (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Curl',
+          lang: 'bash',
+          code: `curl -X PUT 'https://shared.oaifree.com/share/tokens' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "tokens": [
+      "fk-1",
+      "fk-2",
+      "access token"
     ]
+  }'`
+        },
+        {
+          name: 'Python',
+          lang: 'python',
+          code: `import requests
+
+url = "https://shared.oaifree.com/share/tokens"
+headers = {
+    "Content-Type": "application/json",
 }
+data = {"tokens": ["fk-1", "fk-2", "access token"]}
 response = requests.put(url, headers=headers, json=data)
 
 print(response.status_code)
 print(response.json())`
-    }
-  ]}
-/>
+        }
+      ]}
+    />
+  );
+}
