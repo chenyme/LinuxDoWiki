@@ -96,12 +96,20 @@ function getAuthUrl() {
 // 第二步：使用授权码获取访问令牌
 async function getAccessToken(code) {
   try {
-    const response = await axios.post(TOKEN_URL, {
+    const form = new URLSearchParams({
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       code: code,
       redirect_uri: REDIRECT_URI,
       grant_type: 'authorization_code'
+    }).toString();
+
+    const response = await axios.post(TOKEN_URL, form, {
+      // 提醒：需正确配置请求头，否则无法正常获取访问令牌
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      }
     });
 
     return response.data;
