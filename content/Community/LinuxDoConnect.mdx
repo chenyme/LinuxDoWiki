@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
- 
+
 # Linux DO Connect
 
 OAuth（Open Authorization）是一个开放的网络授权标准，目前最新版本为 OAuth 2.0。我们日常使用的第三方登录（如 Google 账号登录）就采用了该标准。OAuth 允许用户授权第三方应用访问存储在其他服务提供商（如 Google）上的信息，无需在不同平台上重复填写注册信息。用户授权后，平台可以直接访问用户的账户信息进行身份验证，而用户无需向第三方应用提供密码。
@@ -79,7 +79,7 @@ const CLIENT_SECRET = '你的Client Secret';
 const REDIRECT_URI = '你的回调地址';
 const AUTH_URL = 'https://connect.linux.do/oauth2/authorize';
 const TOKEN_URL = 'https://connect.linux.do/oauth2/token';
-const USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo';
+const USER_INFO_URL = 'https://connect.linux.do/api/user';
 
 // 第一步：生成授权链接
 function getAuthUrl() {
@@ -89,7 +89,7 @@ function getAuthUrl() {
     response_type: 'code',
     scope: 'user'
   });
-  
+
   return AUTH_URL + '?' + params.toString();
 }
 
@@ -103,7 +103,7 @@ async function getAccessToken(code) {
       redirect_uri: REDIRECT_URI,
       grant_type: 'authorization_code'
     });
-    
+
     return response.data;
   } catch (error) {
     console.error('获取访问令牌失败:', error.response ? error.response.data : error.message);
@@ -119,7 +119,7 @@ async function getUserInfo(accessToken) {
         Authorization: 'Bearer ' + accessToken
       }
     });
-    
+
     return response.data;
   } catch (error) {
     console.error('获取用户信息失败:', error.response ? error.response.data : error.message);
@@ -132,15 +132,15 @@ async function main() {
   // 1. 首先生成授权URL并让用户访问
   const authUrl = getAuthUrl();
   console.log('请访问此URL授权: ' + authUrl);
-  
+
   // 2. 用户授权后，从回调URL获取code参数
   const code = '用户授权后回调URL中的code参数';
-  
+
   try {
     // 3. 使用code获取访问令牌
     const tokenData = await getAccessToken(code);
     const accessToken = tokenData.access_token;
-    
+
     // 4. 使用访问令牌获取用户信息
     if (accessToken) {
       const userInfo = await getUserInfo(accessToken);
@@ -243,7 +243,7 @@ function getAuthUrl($clientId, $redirectUri) {
 // 使用授权码获取用户信息 (合并获取令牌和用户信息步骤)
 function getUserInfoWithCode($code, $clientId, $clientSecret, $redirectUri) {
     global $TOKEN_URL, $USER_INFO_URL;
-    
+
     // 1. 获取访问令牌
     $ch = curl_init($TOKEN_URL);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -255,25 +255,25 @@ function getUserInfoWithCode($code, $clientId, $clientSecret, $redirectUri) {
         'redirect_uri' => $redirectUri,
         'grant_type' => 'authorization_code'
     ]));
-    
+
     $tokenResponse = curl_exec($ch);
     curl_close($ch);
-    
+
     $tokenData = json_decode($tokenResponse, true);
     if (!isset($tokenData['access_token'])) {
         return ['error' => '获取访问令牌失败', 'details' => $tokenData];
     }
-    
+
     // 2. 获取用户信息
     $ch = curl_init($USER_INFO_URL);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Authorization: Bearer ' . $tokenData['access_token']
     ]);
-    
+
     $userResponse = curl_exec($ch);
     curl_close($ch);
-    
+
     return json_decode($userResponse, true);
 }
 
@@ -285,12 +285,12 @@ echo "<a href='$authUrl'>使用 Linux Do 登录</a>";
 // 2. 处理回调并获取用户信息
 if (isset($_GET['code'])) {
     $userInfo = getUserInfoWithCode(
-        $_GET['code'], 
-        $CLIENT_ID, 
-        $CLIENT_SECRET, 
+        $_GET['code'],
+        $CLIENT_ID,
+        $CLIENT_SECRET,
         $REDIRECT_URI
     );
-    
+
     if (isset($userInfo['error'])) {
         echo '错误: ' . $userInfo['error'];
     } else {
