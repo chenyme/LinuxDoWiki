@@ -44,14 +44,21 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 <br></br>
 
 <CodeTabs
-  codes={{
-    Curl: `curl 'http://YOURDOMAIN/manage-api/auth/oauth_token' \\
+  codes={[
+    {
+      name: "Curl",
+      lang: "bash",
+      code: `curl 'http://YOURDOMAIN/manage-api/auth/oauth_token' \\
     -H 'Content-Type: application/json' \\
     -d '{
         "session_key": SESSION_KEY,
         "unique_name": UNIQUE_NAME
-    }'`,
-    Python: `import requests
+    }'`
+    },
+    {
+      name: "Python",
+      lang: "python",
+      code: `import requests
 
 domain = 'YOURDOMAIN'  # 替换为你的域名
 session_key = 'SESSION_KEY'  # 替换为你的 Session Token
@@ -65,8 +72,12 @@ response = requests.post(
         'unique_name': unique_name
     })
 
-login_url = response.json().get('login_url')`,
-    Javascript: `const domain = 'YOURDOMAIN';  // 替换为你的域名
+login_url = response.json().get('login_url')`
+    },
+    {
+      name: "Javascript",
+      lang: "javascript",
+      code: `const domain = 'YOURDOMAIN';  // 替换为你的域名
 const sessionKey = 'SESSION_KEY';  // 替换为你的 Session Token
 const uniqueName = 'UNIQUE_NAME';  // 替换为你的独一无二的名称
 
@@ -93,7 +104,8 @@ fetch(url, {
 .catch(error => {
     console.error('Error:', error);
 });`
-  }}
+    }
+  ]}
 />
 
 ## 部署使用
@@ -109,8 +121,11 @@ fetch(url, {
 <br></br>
 
 <CodeTabs
-  codes={{
-    'Docker-compose': `version: '3'
+  codes={[
+    {
+      name: "Docker-compose",
+      lang: "yaml",
+      code: `version: '3'
 services:
   fuclaude:
     image: pengzhile/fuclaude
@@ -130,5 +145,6 @@ services:
       - FUCLAUDE_SIGNUP_ENABLED=false  # 启用或禁用用户注册（true/false）
       - FUCLAUDE_SHOW_SESSION_KEY=false  # 显示或隐藏会话密钥（true/false）
     restart: unless-stopped`
-  }}
+    }
+  ]}
 />

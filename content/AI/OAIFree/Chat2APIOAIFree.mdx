@@ -32,8 +32,11 @@ API 调用方式与 OpenAI 官方完全一致，只需将 base_url 修改为 OAI
 <br></br>
 
 <CodeTabs
-  codes={{
-    Curl: `curl https://api.oaifree.com/v1 \\
+  codes={[
+    {
+      name: "Curl",
+      lang: "bash",
+      code: `curl https://api.oaifree.com/v1 \\
       -H 'Content-Type: application/json' \\
       -H 'Authorization: Bearer <access token>' \\  # 替换为你的 ACCESS TOKEN
       -d '{
@@ -42,8 +45,12 @@ API 调用方式与 OpenAI 官方完全一致，只需将 base_url 修改为 OAI
           {"role": "system", "content": "You are a helpful assistant."},
           {"role": "user", "content": "What is a LLM?"}
         ]
-      }'`,
-    Python: `from openai import OpenAI
+      }'`
+    },
+    {
+      name: "Python",
+      lang: "python",
+      code: `from openai import OpenAI
 
 client = OpenAI(
     api_key='<access token>',  # 替换为你的 ACCESS TOKEN
@@ -56,8 +63,12 @@ response = client.chat.completions.create(
     {'role': 'system', 'content': 'You are a helpful assistant.'},
     {'role': 'user', 'content': 'What is a LLM?'}
   ]
-)`,
-    Javascript: `const response = await fetch('https://api.oaifree.com/v1', {
+)`
+    },
+    {
+      name: "Javascript",
+      lang: "javascript",
+      code: `const response = await fetch('https://api.oaifree.com/v1', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -71,5 +82,6 @@ response = client.chat.completions.create(
     ]
   })
 });`
-  }}
+    }
+  ]}
 />

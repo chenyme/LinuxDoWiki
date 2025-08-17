@@ -48,14 +48,21 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 <br></br>
 
 <CodeTabs
-  codes={{
-    Curl: `curl 'https://YOURDOMAIN/api/auth/oauth_token' \\
+  codes={[
+    {
+      name: "Curl",
+      lang: "bash",
+      code: `curl 'https://YOURDOMAIN/api/auth/oauth_token' \\
     -H 'Origin: https://YOURDOMAIN' \\
     -H 'Content-Type: application/json' \\
     -d '{
         "share_token": SHARE_TOKEN
-    }'`,
-    Python: `import requests
+    }'`
+    },
+    {
+      name: "Python",
+      lang: "python",
+      code: `import requests
 
 domain = 'YOURDOMAIN' # 例如：new.oaifree.com
 share_token = 'SHARE_TOKEN' # 通过 Share Token 服务获取
@@ -70,8 +77,12 @@ data = {
 }
 
 response = requests.post(url, headers=headers, json=data)
-response.json().get('login_url')`,
-    Javascript: `const domain = 'YOURDOMAIN'; // 例如：new.oaifree.com
+response.json().get('login_url')`
+    },
+    {
+      name: "Javascript",
+      lang: "javascript",
+      code: `const domain = 'YOURDOMAIN'; // 例如：new.oaifree.com
 const shareToken = 'SHARE_TOKEN'; // 通过 Share Token 服务获取
 
 const url = \`https://\${domain}/api/auth/oauth_token\`;
@@ -96,7 +107,8 @@ fetch(url, {
 .catch(error => {
     // 处理错误
 });`
-  }}
+    }
+  ]}
 />
 
 ## 反代镜像服务
@@ -104,19 +116,27 @@ fetch(url, {
 <br></br>
 
 <CodeTabs
-  codes={{
-    'Cloudflare Worker': `export default {
+  codes={[
+    {
+      name: "Cloudflare Worker",
+      lang: "javascript",
+      code: `export default {
     async fetch(request, env) {
     const url = new URL(request.url);
     url.host = 'new.oaifree.com';
     return fetch(new Request(url, request))
   }
 }
-`,
-    'Nginx': `location / {
+`
+    },
+    {
+      name: "Nginx",
+      lang: "nginx",
+      code: `location / {
     proxy_pass https://new.oaifree.com;
     proxy_ssl_server_name on;
 }
 `
-  }}
+    }
+  ]}
 />

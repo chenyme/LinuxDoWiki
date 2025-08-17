@@ -66,8 +66,11 @@ OAuth（Open Authorization）是一个开放的网络授权标准，目前最新
 <br></br>
 
 <CodeTabs
-  codes={{
-    JavaScript: `// 安装第三方请求库（或使用原生的 Fetch API），本例中使用 axios
+  codes={[
+    {
+      name: "JavaScript",
+      lang: "javascript",
+      code: `// 安装第三方请求库（或使用原生的 Fetch API），本例中使用 axios
 // npm install axios
 
 // 通过 OAuth2 获取 Linux Do 用户信息的参考流程
@@ -175,8 +178,12 @@ async function main() {
   }
 }
 
-main();`,
-        Python: `# 安装第三方请求库，本例中使用 requests
+main();`
+    },
+    {
+      name: "Python",
+      lang: "python",
+      code: `# 安装第三方请求库，本例中使用 requests
 # pip install requests
 
 # 通过 OAuth2 获取 Linux Do 用户信息的参考流程
@@ -267,9 +274,12 @@ if __name__ == '__main__':
         else:
             print(f"\n获取访问令牌失败：{json.dumps(token_data, indent=2)}")
     else:
-        print("\n获取访问令牌失败")`,
-
-    PHP: `// 通过 OAuth2 获取 Linux Do 用户信息的参考流程
+        print("\n获取访问令牌失败")`
+    },
+    {
+      name: "PHP",
+      lang: "php",
+      code: `// 通过 OAuth2 获取 Linux Do 用户信息的参考流程
 
 // 配置信息
 $CLIENT_ID = '你的 Client ID';
@@ -352,7 +362,8 @@ if (isset($_GET['code'])) {
         // 处理用户登录逻辑...
     }
 }`
-  }}
+    }
+  ]}
 />
 
 ## 使用说明

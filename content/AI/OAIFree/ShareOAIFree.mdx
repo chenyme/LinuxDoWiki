@@ -30,17 +30,24 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 <br></br>
 
 <CodeTabs
-  codes={{
-    Curl: `curl -X PUT 'https://shared.oaifree.com/share/tokens' \\
+  codes={[
+    {
+      name: "Curl",
+      lang: "bash",
+      code: `curl -X PUT 'https://shared.oaifree.com/share/tokens' \\
     -H 'Content-Type: application/json' \\
     -d '{
         "tokens": [
             "fk-1",
-            "fk-2", 
+            "fk-2",
             "access token"
         ]
-    }'`,
-    Python: `import requests
+    }'`
+    },
+    {
+      name: "Python",
+      lang: "python",
+      code: `import requests
 
 url = 'https://shared.oaifree.com/share/tokens'
 headers = {
@@ -57,5 +64,6 @@ response = requests.put(url, headers=headers, json=data)
 
 print(response.status_code)
 print(response.json())`
-  }}
+    }
+  ]}
 />

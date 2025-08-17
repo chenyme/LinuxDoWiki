@@ -42,18 +42,29 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 <br></br>
 
 <CodeTabs
-  codes={{
-    Curl: `curl -X POST "https://token.oaifree.com/api/auth/refresh" \\
-     -d "refresh_token=YOUR_REFRESH_TOKEN"`,
-    Python: `import json
+  codes={[
+    {
+      name: "Curl",
+      lang: "bash",
+      code: `curl -X POST "https://token.oaifree.com/api/auth/refresh" \\
+     -d "refresh_token=YOUR_REFRESH_TOKEN"`
+    },
+    {
+      name: "Python",
+      lang: "python",
+      code: `import json
 import requests
 
 response = requests.post(
     'https://token.oaifree.com/api/auth/refresh',
     data={'refresh_token': YOUR_REFRESH_TOKEN}
 )
-access_token = response.json().get('access_token')`,
-    Javascript: `const refreshToken = 'YOUR_REFRESH_TOKEN';
+access_token = response.json().get('access_token')`
+    },
+    {
+      name: "Javascript",
+      lang: "javascript",
+      code: `const refreshToken = 'YOUR_REFRESH_TOKEN';
 
 fetch('https://token.oaifree.com/api/auth/refresh', {
     method: 'POST',
@@ -68,7 +79,8 @@ fetch('https://token.oaifree.com/api/auth/refresh', {
     console.log(accessToken);
 })
 .catch(error => console.error('Error:', error));`
-  }}
+    }
+  ]}
 />
 
 <br></br>
