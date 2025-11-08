@@ -80,6 +80,9 @@ const REDIRECT_URI = '你的回调地址';
 const AUTH_URL = 'https://connect.linux.do/oauth2/authorize';
 const TOKEN_URL = 'https://connect.linux.do/oauth2/token';
 const USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo';
+const AUTH = window.btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)
+// 如果使用的是Nodejs
+// const AUTH = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`, "utf-8").toString("base64")
 
 // 第一步：生成授权链接
 function getAuthUrl() {
@@ -102,7 +105,14 @@ async function getAccessToken(code) {
       code: code,
       redirect_uri: REDIRECT_URI,
       grant_type: 'authorization_code'
-    });
+    },
+    {
+        headers:{
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: "Basic " + AUTH,
+        }
+    }
+    );
     
     return response.data;
   } catch (error) {
