@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
- 
+
 # Linux DO Connect
 
 OAuth（Open Authorization）是一个开放的网络授权标准，目前最新版本为 OAuth 2.0。我们日常使用的第三方登录（如 Google 账号登录）就采用了该标准。OAuth 允许用户授权第三方应用访问存储在其他服务提供商（如 Google）上的信息，无需在不同平台上重复填写注册信息。用户授权后，平台可以直接访问用户的账户信息进行身份验证，而用户无需向第三方应用提供密码。
@@ -67,21 +67,22 @@ OAuth（Open Authorization）是一个开放的网络授权标准，目前最新
 
 <CodeTabs
   codes={{
-    JavaScript: `// 安装所需库
+    JavaScript: `// 安装第三方请求库（或使用原生的 Fetch API），本例中使用 axios
 // npm install axios
 
-// 使用 OAuth2 获取 Linux Do 用户信息
+// 通过 OAuth2 获取 Linux Do 用户信息的参考流程
 const axios = require('axios');
+const readline = require('readline');
 
-// 配置信息
-const CLIENT_ID = '你的Client ID';
-const CLIENT_SECRET = '你的Client Secret';
+// 配置信息（建议通过环境变量配置，避免使用硬编码）
+const CLIENT_ID = '你的 Client ID';
+const CLIENT_SECRET = '你的 Client Secret';
 const REDIRECT_URI = '你的回调地址';
 const AUTH_URL = 'https://connect.linux.do/oauth2/authorize';
 const TOKEN_URL = 'https://connect.linux.do/oauth2/token';
-const USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo';
+const USER_INFO_URL = 'https://connect.linux.do/api/user';
 
-// 第一步：生成授权链接
+// 第一步：生成授权 URL
 function getAuthUrl() {
   const params = new URLSearchParams({
     client_id: CLIENT_ID,
@@ -89,87 +90,108 @@ function getAuthUrl() {
     response_type: 'code',
     scope: 'user'
   });
-  
-  return AUTH_URL + '?' + params.toString();
+
+  return \`\${AUTH_URL}?\${params.toString()}\`;
 }
 
-// 第二步：使用授权码获取访问令牌
+// 第二步：获取 code 参数
+function getCode() {
+  return new Promise((resolve) => {
+    // 本例中使用终端输入来模拟流程，仅供本地测试
+    // 请在实际应用中替换为真实的处理逻辑
+    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    rl.question('从回调 URL 中提取出 code，粘贴到此处并按回车：', (answer) => {
+      rl.close();
+      resolve(answer.trim());
+    });
+  });
+}
+
+// 第三步：使用 code 参数获取访问令牌
 async function getAccessToken(code) {
   try {
-    const response = await axios.post(TOKEN_URL, {
+    const form = new URLSearchParams({
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       code: code,
       redirect_uri: REDIRECT_URI,
       grant_type: 'authorization_code'
+    }).toString();
+
+    const response = await axios.post(TOKEN_URL, form, {
+      // 提醒：需正确配置请求头，否则无法正常获取访问令牌
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      }
     });
-    
+
     return response.data;
   } catch (error) {
-    console.error('获取访问令牌失败:', error.response ? error.response.data : error.message);
+    console.error(\`获取访问令牌失败：\${error.response ? JSON.stringify(error.response.data) : error.message}\`);
     throw error;
   }
 }
 
-// 第三步：使用访问令牌获取用户信息
+// 第四步：使用访问令牌获取用户信息
 async function getUserInfo(accessToken) {
   try {
     const response = await axios.get(USER_INFO_URL, {
       headers: {
-        Authorization: 'Bearer ' + accessToken
+        Authorization: \`Bearer \${accessToken}\`
       }
     });
-    
+
     return response.data;
   } catch (error) {
-    console.error('获取用户信息失败:', error.response ? error.response.data : error.message);
+    console.error(\`获取用户信息失败：\${error.response ? JSON.stringify(error.response.data) : error.message}\`);
     throw error;
   }
 }
 
-// 使用示例
+// 主流程
 async function main() {
-  // 1. 首先生成授权URL并让用户访问
+  // 1. 生成授权 URL，前端引导用户访问授权页
   const authUrl = getAuthUrl();
-  console.log('请访问此URL授权: ' + authUrl);
-  
-  // 2. 用户授权后，从回调URL获取code参数
-  const code = '用户授权后回调URL中的code参数';
-  
+  console.log(\`请访问此 URL 授权：\${authUrl}\n\`);
+
+  // 2. 用户授权后，从回调 URL 获取 code 参数
+  const code = await getCode();
+
   try {
-    // 3. 使用code获取访问令牌
+    // 3. 使用 code 参数获取访问令牌
     const tokenData = await getAccessToken(code);
     const accessToken = tokenData.access_token;
-    
+
     // 4. 使用访问令牌获取用户信息
     if (accessToken) {
       const userInfo = await getUserInfo(accessToken);
-      console.log(JSON.stringify(userInfo, null, 2));
+      console.log(\`\n获取用户信息成功：\${JSON.stringify(userInfo, null, 2)}\`);
     } else {
-      console.log('获取访问令牌失败:', tokenData);
+      console.log(\`\n获取访问令牌失败：\${JSON.stringify(tokenData)}\`);
     }
   } catch (error) {
-    console.error('发生错误:', error);
+    console.error('发生错误：', error);
   }
 }
 
 main();`,
-        Python: `# 安装所需库
-pip install requests
+        Python: `# 安装第三方请求库，本例中使用 requests
+# pip install requests
 
-# 使用 OAuth2 获取 Linux Do 用户信息
+# 通过 OAuth2 获取 Linux Do 用户信息的参考流程
 import requests
 import json
 
-# 配置信息
-CLIENT_ID = '你的Client ID'
-CLIENT_SECRET = '你的Client Secret'
+# 配置信息（建议通过环境变量配置，避免使用硬编码）
+CLIENT_ID = '你的 Client ID'
+CLIENT_SECRET = '你的 Client Secret'
 REDIRECT_URI = '你的回调地址'
 AUTH_URL = 'https://connect.linux.do/oauth2/authorize'
 TOKEN_URL = 'https://connect.linux.do/oauth2/token'
-USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo'
+USER_INFO_URL = 'https://connect.linux.do/api/user'
 
-# 第一步：生成授权链接
+# 第一步：生成授权 URL
 def get_auth_url():
     params = {
         'client_id': CLIENT_ID,
@@ -177,59 +199,87 @@ def get_auth_url():
         'response_type': 'code',
         'scope': 'user'
     }
-    auth_url = f'{AUTH_URL}?{'&'.join(f'{k}={v}' for k, v in params.items())}'
+    auth_url = f"{AUTH_URL}?{'&'.join(f'{k}={v}' for k, v in params.items())}"
     return auth_url
 
-# 第二步：使用授权码获取访问令牌
+# 第二步：获取 code 参数
+def get_code():
+    # 本例中使用终端输入来模拟流程，仅供本地测试
+    # 请在实际应用中替换为真实的处理逻辑
+    return input('从回调 URL 中提取出 code，粘贴到此处并按回车：').strip()
+
+# 第三步：使用 code 参数获取访问令牌
 def get_access_token(code):
-    data = {
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'code': code,
-        'redirect_uri': REDIRECT_URI,
-        'grant_type': 'authorization_code'
-    }
-    response = requests.post(TOKEN_URL, data=data)
-    return response.json()
+    try:
+        data = {
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+            'code': code,
+            'redirect_uri': REDIRECT_URI,
+            'grant_type': 'authorization_code'
+        }
+        # 提醒：需正确配置请求头，否则无法正常获取访问令牌
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+        }
+        response = requests.post(TOKEN_URL, data=data, headers=headers)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"获取访问令牌失败：{e}")
+        return None
 
-# 第三步：使用访问令牌获取用户信息
+# 第四步：使用访问令牌获取用户信息
 def get_user_info(access_token):
-    headers = {
-        'Authorization': f'Bearer {access_token}'
-    }
-    response = requests.get(USER_INFO_URL, headers=headers)
-    return response.json()
+    try:
+        headers = {
+            'Authorization': f'Bearer {access_token}'
+        }
+        response = requests.get(USER_INFO_URL, headers=headers)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"获取用户信息失败：{e}")
+        return None
 
-# 使用示例
-# 1. 首先生成授权URL并让用户访问
-auth_url = get_auth_url()
-print(f'请访问此URL授权: {auth_url}')
+# 主流程
+if __name__ == '__main__':
+    # 1. 生成授权 URL，前端引导用户访问授权页
+    auth_url = get_auth_url()
+    print(f'请访问此 URL 授权：{auth_url}\n')
 
-# 2. 用户授权后，从回调URL获取code参数
-code = '用户授权后回调URL中的code参数'
+    # 2. 用户授权后，从回调 URL 获取 code 参数
+    code = get_code()
 
-# 3. 使用code获取访问令牌
-token_data = get_access_token(code)
-access_token = token_data.get('access_token')
+    # 3. 使用 code 参数获取访问令牌
+    token_data = get_access_token(code)
+    if token_data:
+        access_token = token_data.get('access_token')
 
-# 4. 使用访问令牌获取用户信息
-if access_token:
-    user_info = get_user_info(access_token)
-    print(json.dumps(user_info, indent=2))
-else:
-    print('获取访问令牌失败:', token_data)`,
+        # 4. 使用访问令牌获取用户信息
+        if access_token:
+            user_info = get_user_info(access_token)
+            if user_info:
+                print(f"\n获取用户信息成功：{json.dumps(user_info, indent=2)}")
+            else:
+                print("\n获取用户信息失败")
+        else:
+            print(f"\n获取访问令牌失败：{json.dumps(token_data, indent=2)}")
+    else:
+        print("\n获取访问令牌失败")`,
 
-    PHP: `// 使用 OAuth2 获取 Linux Do 用户信息
+    PHP: `// 通过 OAuth2 获取 Linux Do 用户信息的参考流程
 
 // 配置信息
-$CLIENT_ID = '你的Client ID';
-$CLIENT_SECRET = '你的Client Secret';
+$CLIENT_ID = '你的 Client ID';
+$CLIENT_SECRET = '你的 Client Secret';
 $REDIRECT_URI = '你的回调地址';
 $AUTH_URL = 'https://connect.linux.do/oauth2/authorize';
 $TOKEN_URL = 'https://connect.linux.do/oauth2/token';
-$USER_INFO_URL = 'https://connect.linux.do/oauth2/userinfo';
+$USER_INFO_URL = 'https://connect.linux.do/api/user';
 
-// 生成授权链接
+// 生成授权 URL
 function getAuthUrl($clientId, $redirectUri) {
     global $AUTH_URL;
     return $AUTH_URL . '?' . http_build_query([
@@ -240,10 +290,10 @@ function getAuthUrl($clientId, $redirectUri) {
     ]);
 }
 
-// 使用授权码获取用户信息 (合并获取令牌和用户信息步骤)
+// 使用 code 参数获取用户信息（合并获取令牌和获取用户信息的步骤）
 function getUserInfoWithCode($code, $clientId, $clientSecret, $redirectUri) {
     global $TOKEN_URL, $USER_INFO_URL;
-    
+
     // 1. 获取访问令牌
     $ch = curl_init($TOKEN_URL);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -255,42 +305,46 @@ function getUserInfoWithCode($code, $clientId, $clientSecret, $redirectUri) {
         'redirect_uri' => $redirectUri,
         'grant_type' => 'authorization_code'
     ]));
-    
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/x-www-form-urlencoded',
+        'Accept: application/json'
+    ]);
+
     $tokenResponse = curl_exec($ch);
     curl_close($ch);
-    
+
     $tokenData = json_decode($tokenResponse, true);
     if (!isset($tokenData['access_token'])) {
         return ['error' => '获取访问令牌失败', 'details' => $tokenData];
     }
-    
+
     // 2. 获取用户信息
     $ch = curl_init($USER_INFO_URL);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Authorization: Bearer ' . $tokenData['access_token']
     ]);
-    
+
     $userResponse = curl_exec($ch);
     curl_close($ch);
-    
+
     return json_decode($userResponse, true);
 }
 
-// 使用示例
-// 1. 生成授权链接
+// 主流程
+// 1. 生成授权 URL
 $authUrl = getAuthUrl($CLIENT_ID, $REDIRECT_URI);
 echo "<a href='$authUrl'>使用 Linux Do 登录</a>";
 
 // 2. 处理回调并获取用户信息
 if (isset($_GET['code'])) {
     $userInfo = getUserInfoWithCode(
-        $_GET['code'], 
-        $CLIENT_ID, 
-        $CLIENT_SECRET, 
+        $_GET['code'],
+        $CLIENT_ID,
+        $CLIENT_SECRET,
         $REDIRECT_URI
     );
-    
+
     if (isset($userInfo['error'])) {
         echo '错误: ' . $userInfo['error'];
     } else {
