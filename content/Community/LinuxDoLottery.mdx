@@ -94,8 +94,10 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 <br></br>
 
 <CodeTabs
-  codes={{
-    Text: `抽奖主题：[描述抽奖主题]
+  codes={[
+    {
+      name: "Text",
+      code: `抽奖主题：[描述抽奖主题]
 
 **🏆 奖品详情：**
 
@@ -123,7 +125,8 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 所有规则及抽奖结果由活动发起人和论坛[管理团队](https://linux.do/about)最终解释。
 
 **期待您的积极参与，祝您好运！如有任何疑问，欢迎随时联系抽奖发起人。**`
-  }}
+    }
+  ]}
 />
 
 请注意，关于抽奖活动的所有规则及其执行，最终解释权归管理团队所有。我们保留随时修改或补充抽奖规则的权利，以应对任何突发情况或保证活动的公正性。任何规则的变动将及时公布。

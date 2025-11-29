@@ -40,8 +40,11 @@ Share Token 起源于始皇的旧版镜像 Pandora，它的作用是映射一个
 <br></br>
 
 <CodeTabs
-  codes={{
-    Curl: `curl -X POST "https://chat.oaifree.com/token/register" \\
+  codes={[
+    {
+      name: "Curl",
+      lang: "bash",
+      code: `curl -X POST "https://chat.oaifree.com/token/register" \\
      -H "Content-Type: application/x-www-form-urlencoded" \\
      -d "access_token=ACCESS_TOKEN" \\
      -d "unique_name=UNIQUE_NAME" \\
@@ -52,8 +55,12 @@ Share Token 起源于始皇的旧版镜像 Pandora，它的作用是映射一个
      -d "reset_limit=false" \\
      -d "show_conversations=true" \\
      -d "site_limit=" \\
-     -d "temporary_chat=true"`,
-    Python: `import json
+     -d "temporary_chat=true"`
+    },
+    {
+      name: "Python",
+      lang: "python",
+      code: `import json
 import requests
 
 data = {
@@ -70,8 +77,12 @@ data = {
 }
 
 response = requests.post('https://chat.oaifree.com/token/register', headers={'Content-Type': 'application/x-www-form-urlencoded'}, data=data)
-token_key = response.json().get('token_key')`,
-    Javascript: `const data = {
+token_key = response.json().get('token_key')`
+    },
+    {
+      name: "Javascript",
+      lang: "javascript",
+      code: `const data = {
     access_token: 'ACCESS_TOKEN',  // 用户的访问令牌
     unique_name: 'UNIQUE_NAME',  // 独一无二的共享令牌名称
     expire_in: 0,  // 共享令牌的过期秒数，为0取Access Token过期时间，负数吊销分享令牌
@@ -97,7 +108,8 @@ fetch('https://chat.oaifree.com/token/register', {
     console.log(token_key);
 })
 .catch(error => console.error('Error:', error));`
-  }}
+    }
+  ]}
 />
 
 - 返回字段
@@ -105,8 +117,11 @@ fetch('https://chat.oaifree.com/token/register', {
 <br></br>
 
 <CodeTabs
-  codes={{
-    json: `
+  codes={[
+    {
+      name: "json",
+      lang: "json",
+      code: `
 {
     'access_token': （字符串）共享令牌的访问令牌,
     'expire_at': （整型）共享令牌的过期时间，以Unix时间戳表示,
@@ -122,5 +137,6 @@ fetch('https://chat.oaifree.com/token/register', {
     'user_id': （字符串）用户的唯一标识符
 }
 `
-}}
+    }
+  ]}
 />
