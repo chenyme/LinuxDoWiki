@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useTheme } from 'next-themes';
 
-import { cn } from '@/lib/utils';
+import { cn, replaceTabIndex } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger, TabsContents, type TabsProps } from '@/components/animate-ui/components/tabs';
 import { CopyButton } from '@/components/animate-ui/buttons/copy';
 
@@ -58,7 +58,7 @@ function CodeTabs({
             defaultColor: resolvedTheme === 'dark' ? 'dark' : 'light'
           });
 
-          newHighlightedCodes[codeItem.name] = highlighted;
+          newHighlightedCodes[codeItem.name] = replaceTabIndex(highlighted);
         }
 
         setHighlightedCodes(newHighlightedCodes);
