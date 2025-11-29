@@ -31,48 +31,52 @@ API 调用方式与 OpenAI 官方完全一致，只需将 base_url 修改为 OAI
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Curl",
-      lang: "bash",
-      code: `curl https://api.oaifree.com/v1 \\
-      -H 'Content-Type: application/json' \\
-      -H 'Authorization: Bearer <access token>' \\  # 替换为你的 ACCESS TOKEN
-      -d '{
-        "model": "gpt-4o-mini",
-        "messages": [
-          {"role": "system", "content": "You are a helpful assistant."},
-          {"role": "user", "content": "What is a LLM?"}
-        ]
-      }'`
-    },
-    {
-      name: "Python",
-      lang: "python",
-      code: `from openai import OpenAI
+<CodeTabsBlock />
+
+export function CodeTabsBlock() {
+  return (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Curl',
+          lang: 'bash',
+          code: `curl https://api.oaifree.com/v1 \\
+  -H 'Content-Type: application/json' \\
+  -H 'Authorization: Bearer <access token>' \\  # 替换为你的 ACCESS TOKEN
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What is a LLM?"}
+    ]
+  }'`
+        },
+        {
+          name: 'Python',
+          lang: 'python',
+          code: `from openai import OpenAI
 
 client = OpenAI(
-    api_key='<access token>',  # 替换为你的 ACCESS TOKEN
-    base_url='https://api.oaifree.com/v1'
+    api_key="<access token>",  # 替换为你的 ACCESS TOKEN
+    base_url="https://api.oaifree.com/v1",
 )
 
 response = client.chat.completions.create(
-  model='gpt-4o-mini',
-  messages=[
-    {'role': 'system', 'content': 'You are a helpful assistant.'},
-    {'role': 'user', 'content': 'What is a LLM?'}
-  ]
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "What is a LLM?"},
+    ],
 )`
-    },
-    {
-      name: "Javascript",
-      lang: "javascript",
-      code: `const response = await fetch('https://api.oaifree.com/v1', {
+        },
+        {
+          name: 'JavaScript',
+          lang: 'javascript',
+          code: `const response = await fetch('https://api.oaifree.com/v1', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer <access token>'  // 替换为你的 ACCESS TOKEN
+    'Authorization': 'Bearer <access token>' // 替换为你的 ACCESS TOKEN
   },
   body: JSON.stringify({
     model: 'gpt-4o-mini',
@@ -82,6 +86,8 @@ response = client.chat.completions.create(
     ]
   })
 });`
-    }
-  ]}
-/>
+        }
+      ]}
+    />
+  );
+}

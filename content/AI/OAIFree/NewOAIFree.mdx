@@ -47,96 +47,98 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Curl",
-      lang: "bash",
-      code: `curl 'https://YOURDOMAIN/api/auth/oauth_token' \\
-    -H 'Origin: https://YOURDOMAIN' \\
-    -H 'Content-Type: application/json' \\
-    -d '{
-        "share_token": SHARE_TOKEN
-    }'`
-    },
-    {
-      name: "Python",
-      lang: "python",
-      code: `import requests
-
-domain = 'YOURDOMAIN' # 例如：new.oaifree.com
-share_token = 'SHARE_TOKEN' # 通过 Share Token 服务获取
-
-url = f'https://{domain}/api/auth/oauth_token'
-headers = {
-    'Origin': f'https://{domain}',
-    'Content-Type': 'application/json'
-}
-data = {
-    'share_token': share_token
-}
-
-response = requests.post(url, headers=headers, json=data)
-response.json().get('login_url')`
-    },
-    {
-      name: "Javascript",
-      lang: "javascript",
-      code: `const domain = 'YOURDOMAIN'; // 例如：new.oaifree.com
-const shareToken = 'SHARE_TOKEN'; // 通过 Share Token 服务获取
-
-const url = \`https://\${domain}/api/auth/oauth_token\`;
-const headers = {
-    'Origin': \`https://\${domain}\`,
-    'Content-Type': 'application/json'
-};
-const data = {
-    'share_token': shareToken
-};
-
-fetch(url, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify(data)
-})
-.then(response => response.json())
-.then(data => {
-    const loginUrl = data.login_url;
-    // 这里可以进一步处理 loginUrl
-})
-.catch(error => {
-    // 处理错误
-});`
-    }
-  ]}
-/>
+<CodeTabsBlocks.OAuth />
 
 ## 反代镜像服务
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Cloudflare Worker",
-      lang: "javascript",
-      code: `export default {
-    async fetch(request, env) {
+<CodeTabsBlocks.Proxy />
+
+export const CodeTabsBlocks = {
+  OAuth: () => (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Curl',
+          lang: 'bash',
+          code: `curl 'https://YOURDOMAIN/api/auth/oauth_token' \\
+  -H 'Origin: https://YOURDOMAIN' \\
+  -H 'Content-Type: application/json' \\
+  -d '{
+    "share_token": SHARE_TOKEN
+  }'`
+        },
+        {
+          name: 'Python',
+          lang: 'python',
+          code: `import requests
+
+domain = "YOURDOMAIN"  # 例如：new.oaifree.com
+share_token = "SHARE_TOKEN"  # 通过 Share Token 服务获取
+
+url = f"https://{domain}/api/auth/oauth_token"
+headers = {"Origin": f"https://{domain}", "Content-Type": "application/json"}
+data = {"share_token": share_token}
+
+response = requests.post(url, headers=headers, json=data)
+response.json().get("login_url")`
+        },
+        {
+          name: 'JavaScript',
+          lang: 'javascript',
+          code: `const domain = 'YOURDOMAIN'; // 例如：new.oaifree.com
+const shareToken = 'SHARE_TOKEN'; // 通过 Share Token 服务获取
+
+const url = \`https://\${domain}/api/auth/oauth_token\`;
+const headers = {
+  'Origin': \`https://\${domain}\`,
+  'Content-Type': 'application/json'
+};
+const data = {
+  share_token: shareToken
+};
+
+fetch(url, {
+  method: 'POST',
+  headers: headers,
+  body: JSON.stringify(data)
+})
+  .then((response) => response.json())
+  .then((data) => {
+    const loginUrl = data.login_url;
+    // 这里可以进一步处理 loginUrl
+  })
+  .catch((error) => {
+    // 处理错误
+  });`
+        }
+      ]}
+    />
+  ),
+  Proxy: () => (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Cloudflare Worker',
+          lang: 'javascript',
+          code: `export default {
+  async fetch(request, env) {
     const url = new URL(request.url);
     url.host = 'new.oaifree.com';
-    return fetch(new Request(url, request))
+    return fetch(new Request(url, request));
   }
-}
-`
-    },
-    {
-      name: "Nginx",
-      lang: "nginx",
-      code: `location / {
-    proxy_pass https://new.oaifree.com;
-    proxy_ssl_server_name on;
-}
-`
-    }
-  ]}
-/>
+};`
+        },
+        {
+          name: 'Nginx',
+          lang: 'nginx',
+          code: `location / {
+  proxy_pass https://new.oaifree.com;
+  proxy_ssl_server_name on;
+}`
+        }
+      ]}
+    />
+  )
+};

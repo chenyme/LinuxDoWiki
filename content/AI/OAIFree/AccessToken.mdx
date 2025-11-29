@@ -41,47 +41,7 @@ import { CodeTabs } from '@/components/animate-ui/components/code-tabs'
 
 <br></br>
 
-<CodeTabs
-  codes={[
-    {
-      name: "Curl",
-      lang: "bash",
-      code: `curl -X POST "https://token.oaifree.com/api/auth/refresh" \\
-     -d "refresh_token=YOUR_REFRESH_TOKEN"`
-    },
-    {
-      name: "Python",
-      lang: "python",
-      code: `import json
-import requests
-
-response = requests.post(
-    'https://token.oaifree.com/api/auth/refresh',
-    data={'refresh_token': YOUR_REFRESH_TOKEN}
-)
-access_token = response.json().get('access_token')`
-    },
-    {
-      name: "Javascript",
-      lang: "javascript",
-      code: `const refreshToken = 'YOUR_REFRESH_TOKEN';
-
-fetch('https://token.oaifree.com/api/auth/refresh', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({ refresh_token: YOUR_REFRESH_TOKEN })
-})
-.then(response => response.json())
-.then(data => {
-    const accessToken = data.access_token;
-    console.log(accessToken);
-})
-.catch(error => console.error('Error:', error));`
-    }
-  ]}
-/>
+<CodeTabsBlock />
 
 <br></br>
 
@@ -91,3 +51,50 @@ fetch('https://token.oaifree.com/api/auth/refresh', {
   href='/AI/OAIFree/ShareToken#通过-access-token-获取'
   arrow
 />
+
+export function CodeTabsBlock() {
+  return (
+    <CodeTabs
+      codes={[
+        {
+          name: 'Curl',
+          lang: 'bash',
+          code: `curl -X POST "https://token.oaifree.com/api/auth/refresh" \\
+  -d "refresh_token=YOUR_REFRESH_TOKEN"`
+        },
+        {
+          name: 'Python',
+          lang: 'python',
+          code: `import json
+import requests
+
+response = requests.post(
+    "https://token.oaifree.com/api/auth/refresh",
+    data={"refresh_token": YOUR_REFRESH_TOKEN},
+)
+access_token = response.json().get("access_token")`
+        },
+        {
+          name: 'JavaScript',
+          lang: 'javascript',
+          code: `const refreshToken = 'YOUR_REFRESH_TOKEN';
+
+fetch('https://token.oaifree.com/api/auth/refresh', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  body: new URLSearchParams({ refresh_token: YOUR_REFRESH_TOKEN })
+})
+  .then((response) => response.json())
+  .then((data) => {
+    const accessToken = data.access_token;
+    console.log(accessToken);
+  })
+  .catch((error) => console.error('Error:', error));
+`
+        }
+      ]}
+    />
+  );
+}
